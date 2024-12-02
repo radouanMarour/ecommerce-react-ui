@@ -1,0 +1,64 @@
+.account {
+    position: relative;
+}
+
+.account svg {
+    cursor: pointer;
+    font-size: 24px;
+    /* Adjust icon size as needed */
+    transition: transform 0.2s ease;
+    /* Add a transition for icon hover */
+}
+
+.account:hover svg {
+    transform: scale(1.1);
+    /* Slightly enlarge icon on hover */
+}
+
+.account .dropdown {
+    position: absolute;
+    background-color: var(--primary-white);
+    box-shadow: var(--box-shadow);
+    border: 1px solid var(--border-color);
+    top: 100%;
+    right: 0;
+    z-index: 10;
+    width: 150px;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    opacity: 0;
+    /* Initially hidden */
+    transform: translateY(-10px);
+    /* Slightly shifted up */
+    transition: opacity 0.3s ease-in-out, transform 0.3s ease-in-out;
+    /* Smooth transitions */
+}
+
+.account .dropdown.open {
+    opacity: 1;
+    transform: translateY(0);
+    /* Move to its final position */
+}
+
+.account .dropdown li {
+    padding: 10px;
+    text-align: left;
+    cursor: pointer;
+    font-family: var(--font-primary);
+    color: var(--text-primary);
+    transition: background-color 0.2s ease;
+    /* Smooth transition for hover */
+}
+
+.account .dropdown li:hover {
+    background-color: var(--primary-gray);
+}
+
+.account .dropdown a {
+    text-decoration: none;
+    color: var(--text-primary);
+    display: block;
+    /* Ensure links fill the list item */
+    width: 100%;
+}

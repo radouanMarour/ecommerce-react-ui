@@ -1,0 +1,57 @@
+:root {
+  --primary-color: #FFFFFF;
+  /* White */
+  --secondary-color: #2196F3;
+  /* Deep Blue */
+  --tertiary-color: #EEEEEE;
+  /* Light Gray */
+  --accent-color: #90CAF9;
+  /* Light Blue */
+  --text-color: #333333;
+  /* Dark Gray for text */
+  --link-color: var(--secondary-color);
+  /* Deep Blue for links */
+  --hover-color: #1976D2;
+  /* Slightly darker blue for hover effects */
+  --background-color: var(--primary-color);
+  /* White for background */
+  --border-color: #d3d3d3;
+  /*Light gray for borders*/
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+
+/* Example usage */
+body {
+  background-color: var(--background-color);
+  color: var(--text-color);
+  font-family: sans-serif;
+  /* Or your preferred font */
+}
+
+a {
+  color: var(--link-color);
+  text-decoration: none;
+}
+
+a:hover {
+  color: var(--hover-color);
+}
+
+.button {
+  background-color: var(--secondary-color);
+  color: var(--primary-color);
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.button:hover {
+  background-color: var(--hover-color);
+}

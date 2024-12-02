@@ -1,0 +1,97 @@
+/* Assuming you've already imported the :root variables */
+
+.profile-page {
+    padding: 2rem;
+}
+
+.profile-page h1 {
+    color: var(--secondary-color);
+    /* Deep blue heading */
+    margin-bottom: 2rem;
+}
+
+.profile-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    /* Responsive grid */
+    grid-gap: 2rem;
+}
+
+.user-info,
+.order-history,
+.change-password {
+    border: 1px solid var(--border-color);
+    /* Light gray border */
+    padding: 1rem;
+    border-radius: 5px;
+}
+
+.user-info h2,
+.order-history h2,
+.change-password h2 {
+    color: var(--secondary-color);
+    /* Deep blue heading */
+    margin-bottom: 1rem;
+}
+
+.user-info label,
+.change-password label {
+    display: block;
+    margin-bottom: 0.5rem;
+    color: var(--text-color);
+    /* Dark gray label text */
+}
+
+.user-info input,
+.change-password input {
+    width: 100%;
+    padding: 0.8rem;
+    border: 1px solid var(--border-color);
+    /* Light gray border */
+    border-radius: 5px;
+    margin-bottom: 1rem;
+    outline: none;
+}
+
+.update-button,
+.change-password-button {
+    background-color: var(--secondary-color);
+    /* Deep blue button */
+    color: var(--primary-color);
+    /* White text */
+    padding: 1rem 1.5rem;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.update-button:hover,
+.change-password-button:hover {
+    background-color: var(--hover-color);
+    /* Slightly darker blue on hover */
+}
+
+.order-history ul {
+    list-style: none;
+    padding: 0;
+}
+
+.order-history li {
+    color: var(--text-color);
+    /* Dark gray text */
+    margin-bottom: 0.5rem;
+}
+
+.order-history li span {
+    display: block;
+    margin-bottom: 0.2rem;
+}
+
+/*Responsive adjustments (optional)*/
+@media (max-width: 768px) {
+    .profile-container {
+        grid-template-columns: 1fr;
+        /* Stack sections vertically on smaller screens */
+    }
+}

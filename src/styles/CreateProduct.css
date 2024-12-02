@@ -1,0 +1,130 @@
+/* Assuming you've already imported the :root variables */
+
+.create-product-page {
+    padding: 2rem;
+    width: 100%;
+    max-width: 700px;
+    margin: auto;
+}
+
+.create-product-page h1 {
+    color: var(--secondary-color);
+    margin-bottom: 2rem;
+    text-align: center;
+}
+
+.product-form {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    /* Two equal columns */
+    grid-gap: 2rem;
+}
+
+.form-group {
+    margin-bottom: 1rem;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 0.5rem;
+    color: var(--text-color);
+}
+
+.form-group input,
+.form-group select,
+.form-group textarea {
+    width: 100%;
+    padding: 0.8rem;
+    border: 1px solid var(--border-color);
+    border-radius: 5px;
+    outline: none;
+    resize: vertical;
+}
+
+.inline-input {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 0.5rem;
+}
+
+.inline-input input {
+    flex-grow: 1;
+}
+
+.inline-input button {
+    background-color: var(--secondary-color);
+    color: var(--primary-color);
+    padding: 0.6rem 1rem;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.inline-input button:hover {
+    background-color: var(--hover-color);
+}
+
+.tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-bottom: 1rem;
+}
+
+.tag {
+    background-color: var(--tertiary-color);
+    padding: 0.4rem 0.8rem;
+    border-radius: 5px;
+    color: var(--text-color);
+    font-size: 0.9rem;
+}
+
+.image-preview {
+    max-width: 100px;
+    max-height: 100px;
+    object-fit: cover;
+    margin-right: 0.5rem;
+}
+
+.submit-button {
+    background-color: var(--secondary-color);
+    color: var(--primary-color);
+    padding: 1rem 1.5rem;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    margin-top: 2rem;
+    grid-column: 1 / 3;
+    text-align: center;
+}
+
+.submit-button:hover {
+    background-color: var(--hover-color);
+}
+
+.description textarea {
+    height: 10rem;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .product-form {
+        display: block;
+        /* Single column on smaller screens */
+    }
+}
+
+/* Style the file input */
+.form-group input[type="file"] {
+    padding: 0.8rem;
+    border: 1px solid var(--border-color);
+    border-radius: 5px;
+}
+
+.image-previews {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+}

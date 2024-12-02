@@ -1,0 +1,83 @@
+/* Assuming you've already imported the :root variables */
+
+.signup-page {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    /* Make it take up the full viewport height */
+    padding: 2rem;
+    background-color: var(--tertiary-color);
+    /* Light gray background */
+}
+
+.signup-page h1 {
+    color: var(--secondary-color);
+    /* Deep blue heading */
+    margin-bottom: 2rem;
+}
+
+.signup-page form {
+    display: flex;
+    flex-direction: column;
+    width: 300px;
+    /* Adjust width as needed */
+    background-color: var(--background-color);
+    /* White background for the form */
+    padding: 2rem;
+    border-radius: 5px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    /* Add a subtle shadow */
+}
+
+.signup-page label {
+    display: block;
+    margin-bottom: 0.5rem;
+    color: var(--text-color);
+    /* Dark gray label text */
+}
+
+.signup-page input {
+    width: 100%;
+    padding: 0.8rem;
+    border: 1px solid var(--border-color);
+    /* Light gray border */
+    border-radius: 5px;
+    margin-bottom: 1rem;
+    outline: none;
+}
+
+.signup-page button {
+    background-color: var(--secondary-color);
+    /* Deep blue button */
+    color: var(--primary-color);
+    /* White text */
+    padding: 1rem 1.5rem;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.signup-page button:hover {
+    background-color: var(--hover-color);
+    /* Slightly darker blue on hover */
+}
+
+.signup-page p {
+    margin-top: 2rem;
+    color: var(--text-color);
+    /* Dark gray text */
+    text-align: center;
+}
+
+.signup-page a {
+    color: var(--secondary-color);
+    /* Deep blue link color */
+    text-decoration: none;
+}
+
+.signup-page a:hover {
+    text-decoration: underline;
+}

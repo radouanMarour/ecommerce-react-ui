@@ -1,0 +1,72 @@
+.nav .tab-content {
+    position: absolute;
+    background-color: var(--primary-white);
+    box-shadow: var(--box-shadow);
+    border: 1px solid var(--border-color);
+    top: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 10;
+    width: 50%;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.3s ease-in-out;
+}
+
+.tabs {
+    display: flex;
+}
+
+.tabs .tab {
+    margin: 0 1rem;
+    cursor: pointer;
+    padding: 10px 20px;
+    /* Add padding for better click target */
+    border-bottom: 2px solid transparent;
+    transition: border-bottom 0.3s ease, color 0.3s ease;
+    /* Smooth transitions */
+}
+
+.tab.active {
+    color: var(--text-highlight);
+    border-bottom: 2px solid var(--text-highlight);
+}
+
+
+.nav:hover .tab-content {
+    max-height: 300px
+}
+
+.nav .tab-content li {
+    padding: 10px;
+    width: 100%;
+    text-align: left;
+    cursor: pointer;
+    font-family: var(--font-primary);
+    color: var(--text-primary);
+    transition: background-color 0.2s ease;
+    /* Smooth transition for hover */
+}
+
+.nav .tab-content li:hover {
+    background-color: var(--primary-gray);
+}
+
+.nav .tab-content a {
+    text-decoration: none;
+    color: var(--text-primary);
+    display: block;
+    width: 100%;
+}
+
+/* No need for these classes anymore since we use transitions */
+/*.tab-content.open {
+  display: block;
+}
+
+.tab-content.close {
+  display: none;
+}*/

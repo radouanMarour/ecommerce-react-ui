@@ -1,0 +1,176 @@
+/* Assuming you've already imported the :root variables */
+
+.product-details-page {
+    display: flex;
+    padding: 2rem;
+    gap: 2rem;
+    /* Space between product details and related products */
+}
+
+.product-details {
+    flex: 1;
+    /* Product details take up available space */
+    display: flex;
+    gap: 2rem;
+}
+
+
+.product-images {
+    width: 400px;
+    display: flex;
+    flex-direction: column;
+}
+
+.main-image {
+    width: 100%;
+    max-height: 400px;
+    object-fit: cover;
+    margin-bottom: 1rem;
+}
+
+.image-thumbnails img {
+    width: 100px;
+    height: 100px;
+    object-fit: cover;
+    margin-right: 0.5rem;
+    /* Space between thumbnails */
+    cursor: pointer;
+}
+
+.product-info {
+    flex: 1;
+}
+
+.product-info h1 {
+    color: var(--secondary-color);
+    /* Deep blue heading */
+    margin-bottom: 0.5rem;
+}
+
+.product-info .price {
+    font-weight: bold;
+    color: var(--secondary-color);
+    /* Deep blue price */
+    margin-bottom: 1rem;
+}
+
+.product-info p {
+    color: var(--text-color);
+    /* Dark gray text */
+    line-height: 1.6;
+    margin-bottom: 1.5rem;
+}
+
+
+.selection {
+    margin-bottom: 1rem;
+}
+
+.selection label {
+    display: block;
+    margin-bottom: 0.5rem;
+    color: var(--text-color);
+}
+
+.selection select {
+    width: 100%;
+    padding: 0.8rem;
+    border: 1px solid var(--border-color);
+    /* Light gray border */
+    border-radius: 5px;
+    outline: none;
+}
+
+.add-to-cart {
+    background-color: var(--secondary-color);
+    /* Deep blue button */
+    color: var(--primary-color);
+    /* White text */
+    padding: 1rem 1.5rem;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.add-to-cart:hover {
+    background-color: var(--hover-color);
+    /* Slightly darker blue on hover */
+}
+
+
+/*Related Products*/
+.related-products {
+    flex: 1;
+    /* Takes up remaining space */
+}
+
+.related-products h2 {
+    color: var(--secondary-color);
+    /* Deep blue heading */
+    margin-bottom: 1rem;
+}
+
+.related-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    /* Responsive grid */
+    grid-gap: 1rem;
+}
+
+.related-product-card {
+    border: 1px solid var(--border-color);
+    /* Light gray border */
+    padding: 1rem;
+    border-radius: 5px;
+    text-align: center;
+    transition: box-shadow 0.3s ease;
+}
+
+.related-product-card img {
+    width: 100%;
+    max-height: 200px;
+    object-fit: cover;
+    margin-bottom: 0.5rem;
+    border-radius: 5px;
+}
+
+.related-product-card h3 {
+    margin: 0;
+    color: var(--text-color);
+    /* Dark gray text */
+    margin-bottom: 0.5rem;
+}
+
+.related-product-card p {
+    color: var(--secondary-color);
+    /* Deep blue price */
+    font-weight: bold;
+    margin: 0;
+}
+
+.related-product-card:hover {
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    /* Subtle shadow on hover */
+}
+
+
+/*Responsiveness (adjust breakpoints as needed)*/
+@media (max-width: 768px) {
+    .product-details-page {
+        flex-direction: column;
+        /* Stack elements vertically on smaller screens */
+    }
+
+    .product-details {
+        flex-direction: column;
+    }
+
+    .product-images {
+        width: 100%;
+    }
+
+    .related-products {
+        margin-top: 2rem;
+    }
+}

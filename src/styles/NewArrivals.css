@@ -1,0 +1,25 @@
+.new-arrivals {
+    padding: 2rem;
+    text-align: center;
+}
+
+.new-arrivals h2 {
+    font-size: 2rem;
+    margin-bottom: 2rem;
+    font-family: var(--font-primary);
+    color: var(--text-primary);
+}
+
+.product-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    /* Responsive grid */
+    grid-gap: 2rem;
+}
+
+@media (max-width: 768px) {
+    .product-grid {
+        grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+        /* Adjust for smaller screens */
+    }
+}

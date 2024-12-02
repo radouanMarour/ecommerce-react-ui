@@ -1,0 +1,81 @@
+/* Assuming you've already imported the :root variables */
+
+.checkout-page {
+    padding: 2rem;
+}
+
+.checkout-page h1 {
+    color: var(--secondary-color);
+    /* Deep blue heading */
+    margin-bottom: 2rem;
+}
+
+.checkout-container {
+    display: flex;
+    gap: 2rem;
+}
+
+.shipping-info,
+.order-summary {
+    flex: 1;
+    border: 1px solid var(--border-color);
+    /* Light gray border */
+    padding: 1rem;
+    border-radius: 5px;
+}
+
+.shipping-info h2,
+.order-summary h2 {
+    color: var(--secondary-color);
+    /* Deep blue heading */
+    margin-bottom: 1rem;
+}
+
+.shipping-info label {
+    display: block;
+    margin-bottom: 0.5rem;
+    color: var(--text-color);
+    /* Dark gray label text */
+}
+
+.shipping-info input {
+    width: 100%;
+    padding: 0.8rem;
+    border: 1px solid var(--border-color);
+    /* Light gray border */
+    border-radius: 5px;
+    margin-bottom: 1rem;
+    outline: none;
+}
+
+.order-summary p {
+    color: var(--text-color);
+    /* Dark gray text */
+    margin-bottom: 1rem;
+}
+
+.place-order {
+    background-color: var(--secondary-color);
+    /* Deep blue button */
+    color: var(--primary-color);
+    /* White text */
+    padding: 1rem 1.5rem;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    width: 100%;
+    transition: background-color 0.3s ease;
+}
+
+.place-order:hover {
+    background-color: var(--hover-color);
+    /* Slightly darker blue on hover */
+}
+
+/*Responsive adjustments (optional)*/
+@media (max-width: 768px) {
+    .checkout-container {
+        flex-direction: column;
+        /* Stack shipping info and order summary vertically */
+    }
+}

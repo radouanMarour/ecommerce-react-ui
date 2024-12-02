@@ -1,0 +1,152 @@
+/* Assuming you're importing the :root variables from a separate stylesheet */
+/* ...your :root variables from previous response... */
+
+.desktop-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem 2rem;
+    /* Adjust padding as needed */
+    background-color: var(--background-color);
+    /* White background */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    /* Subtle shadow */
+}
+
+.desktop-logo {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: var(--secondary-color);
+    /* Deep Blue logo */
+}
+
+.desktop-search {
+    display: flex;
+    align-items: center;
+    border: 1px solid var(--border-color);
+    /* Light gray border */
+    border-radius: 5px;
+    overflow: hidden;
+    /* Hide the input overflow */
+}
+
+.search-input {
+    padding: 0.5rem;
+    border: none;
+    flex-grow: 1;
+    /* Input takes up available space */
+    outline: none;
+    /* Remove default outline */
+    background-color: transparent;
+    /* Transparent background */
+}
+
+.search-icon {
+    padding: 0.5rem;
+    color: var(--secondary-color);
+    /* Deep Blue icon */
+    cursor: pointer;
+}
+
+.desktop-nav {
+    display: flex;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.dropdown {
+    position: relative;
+    margin-right: 2rem;
+    /* Adjust spacing between nav items */
+}
+
+.nav-link {
+    color: var(--text-color);
+    text-decoration: none;
+    cursor: pointer;
+    padding: 0.8rem 1rem;
+    transition: color 0.3s ease;
+    /* Smooth color transition */
+}
+
+.nav-link:hover {
+    color: var(--secondary-color);
+    /* Deep Blue on hover */
+}
+
+.dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: var(--background-color);
+    /* White dropdown */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    min-width: 160px;
+    z-index: 1;
+}
+
+.dropdown:hover .dropdown-content {
+    display: block;
+}
+
+.dropdown-content a {
+    color: var(--text-color);
+    padding: 0.5rem 1rem;
+    text-decoration: none;
+    display: block;
+}
+
+.dropdown-content a:hover {
+    background-color: var(--tertiary-color);
+    /* Light gray hover */
+}
+
+.desktop-icons {
+    display: flex;
+    align-items: center;
+}
+
+.icon {
+    margin-left: 1rem;
+    color: var(--secondary-color);
+    /* Deep Blue icons */
+    cursor: pointer;
+}
+
+.icon:hover {
+    color: var(--hover-color);
+    /* Slightly darker blue hover */
+}
+
+/*Responsiveness (Example - Adjust breakpoints as needed)*/
+@media (max-width: 768px) {
+    .desktop-header {
+        flex-direction: column;
+        /* Stack elements vertically on smaller screens */
+        align-items: flex-start;
+        /* Align items to the left */
+    }
+
+    .desktop-nav {
+        flex-direction: column;
+        /* Stack navigation items vertically */
+    }
+
+    .desktop-nav .dropdown {
+        margin-bottom: 1rem;
+        margin-right: 0;
+    }
+
+    .desktop-search {
+        margin-bottom: 1rem;
+    }
+
+    .desktop-icons {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .icon {
+        margin-bottom: 0.5rem;
+    }
+}
