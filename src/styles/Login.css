@@ -7,7 +7,7 @@
     justify-content: center;
     height: 100vh;
     /* Make it take up the full viewport height */
-    padding: 2rem;
+    padding: 1rem;
     background-color: var(--tertiary-color);
     /* Light gray background */
 }
@@ -21,7 +21,7 @@
 .login-page form {
     display: flex;
     flex-direction: column;
-    width: 300px;
+    width: 500px;
     /* Adjust width as needed */
     background-color: var(--background-color);
     /* White background for the form */

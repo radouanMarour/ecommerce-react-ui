@@ -1,46 +1,60 @@
 import { createSlice } from '@reduxjs/toolkit'
-import { loginAsync } from '../../api/authApi';
+import { loginAsync, signupAsync } from '../../api/authApi';
 
 const initialState = {
     isAuthenticated: false,
     user: null,
     token: null,
-    loading: 'idle',
-    error: null
+    status: 'idle',
+    error: null,
+    message: null
 }
 
 const authSlice = createSlice({
     name: 'auth',
     initialState,
     reducers: {
-        updateProfile(state, action) {
-            state.user = { ...state.user, ...action.payload }
+        clear(state) {
+            state.error = null,
+                state.message = null
         },
         logout(state) {
-            state.isAuthenticated = false;
+            state.isAuthenticated = false
             state.user = null
             state.token = null
-        },
+            state.status = 'idle'
+        }
     },
     extraReducers: (builder) => {
         builder.addCase(loginAsync.pending, (state) => {
-            state.loading = "pending"
+            state.status = "pending"
             state.isAuthenticated = false;
         })
             .addCase(loginAsync.fulfilled, (state, action) => {
-                state.loading = "succeeded"
+                state.status = "succeeded"
                 state.isAuthenticated = true;
-                state.user = action.payload.user;
+                state.user = action.payload.data;
                 state.token = action.payload.token
             })
             .addCase(loginAsync.rejected, (state, action) => {
-                state.loading = "failed"
+                state.status = "failed"
                 state.isAuthenticated = false;
-                state.error = action.payload
+                state.error = action.payload.message
+            })
+            .addCase(signupAsync.pending, (state) => {
+                state.status = "pending"
+            })
+            .addCase(signupAsync.fulfilled, (state, action) => {
+                state.status = "succeeded"
+                state.message = action.payload.message
+            })
+            .addCase(signupAsync.rejected, (state, action) => {
+                state.status = "failed"
+                state.error = action.payload.message
             })
     }
 })
 
-export const { logout, updateProfile } = authSlice.actions
+export const { clear, logout } = authSlice.actions
 
 export default authSlice.reducer;

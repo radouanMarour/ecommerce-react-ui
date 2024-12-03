@@ -89,14 +89,22 @@
     display: block;
 }
 
-.dropdown-content a {
+.dropdown-content a,
+.dropdown-content button {
     color: var(--text-color);
     padding: 0.5rem 1rem;
     text-decoration: none;
     display: block;
+    width: 100%;
+    outline: none;
+    border: none;
+    cursor: pointer;
+    background-color: transparent;
+    text-align: left;
 }
 
-.dropdown-content a:hover {
+.dropdown-content a:hover,
+.dropdown-content button:hover {
     background-color: var(--tertiary-color);
     /* Light gray hover */
 }

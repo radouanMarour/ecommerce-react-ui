@@ -1,23 +1,33 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import '../styles/Login.css';
 import { useDispatch, useSelector } from 'react-redux'
 import { loginAsync } from '../api/authApi';
+import { clear } from '../redux/slices/authSlice';
+import { AnimatePresence } from 'motion/react';
+import Alert from '../components/Alert';
 
 const Login = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
-    const { loading, error } = useSelector((state) => state.auth)
+    const { status, error } = useSelector((state) => state.auth)
     const dispatch = useDispatch()
+    const navigate = useNavigate()
+
 
     const handleLogin = (e) => {
         e.preventDefault();
+        dispatch(clear())
         dispatch(loginAsync({ email, password }))
+        navigate("/")
     };
 
     return (
         <div className="login-page">
             <h1>Login</h1>
+            <AnimatePresence>
+                {error && <Alert message={error} type={"error"} />}
+            </AnimatePresence>
             <form onSubmit={handleLogin}>
                 <label>
                     Email:
@@ -38,7 +48,7 @@ const Login = () => {
                     />
                 </label>
                 <button type="submit">
-                    {loading === 'pending' ? "Logging in..." : "Login"}
+                    {status === 'pending' ? "Logging in..." : "Login"}
                 </button>
             </form>
             <p>

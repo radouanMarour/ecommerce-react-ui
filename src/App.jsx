@@ -1,4 +1,5 @@
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+
 import Home from './pages/Home';
 import ProductListing from './pages/ProductListing';
 import ProductDetails from './pages/ProductDetails';
@@ -6,11 +7,10 @@ import Cart from './pages/Cart';
 import Checkout from './pages/Checkout';
 import Login from './pages/Login';
 import Signup from './pages/Signup';
+import Profile from './pages/Profile';
 import Dashboard from './pages/Dashboard';
 import SearchResults from './pages/SearchResults';
 import CreateProduct from './pages/CreateProduct';
-import { ToastContainer } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
 import './App.css'
 import Header from './components/Header';
 
@@ -38,6 +38,7 @@ const App = () => {
         {/* Login and Signup */}
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<Signup />} />
+        <Route path="/account" element={<Profile />} />
 
         {/* Search Results */}
         <Route path="/search" element={<SearchResults />} />

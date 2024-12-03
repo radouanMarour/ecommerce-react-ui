@@ -1,8 +1,16 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import '../styles/Signup.css';
+import { useDispatch, useSelector } from 'react-redux'
+import { signupAsync } from '../api/authApi';
+import { clear } from '../redux/slices/authSlice';
+import Alert from '../components/Alert';
+import { AnimatePresence } from 'motion/react';
 
 const Signup = () => {
+    const { status, error, message } = useSelector((state) => state.auth)
+    const dispatch = useDispatch()
+    const navigate = useNavigate()
     const [formData, setFormData] = useState({
         name: '',
         email: '',
@@ -17,16 +25,18 @@ const Signup = () => {
 
     const handleSignup = (e) => {
         e.preventDefault();
-        if (formData.password !== formData.confirmPassword) {
-            alert('Passwords do not match!');
-            return;
-        }
-        alert(`Signed up with ${formData.email}`);
+        dispatch(clear())
+        dispatch(signupAsync(formData))
+        navigate('/login')
     };
 
     return (
         <div className="signup-page">
             <h1>Sign Up</h1>
+            <AnimatePresence>
+                {error && <Alert message={error} type={"error"} />}
+                {message && <Alert message={message} type={"success"} />}
+            </AnimatePresence>
             <form onSubmit={handleSignup}>
                 <label>
                     Name:
@@ -68,7 +78,9 @@ const Signup = () => {
                         required
                     />
                 </label>
-                <button type="submit">Sign Up</button>
+                <button type="submit">
+                    {status === 'pending' ? "Signing Up..." : "Sign Up"}
+                </button>
             </form>
             <p>
                 Already have an account? <Link to="/login">Log in</Link>

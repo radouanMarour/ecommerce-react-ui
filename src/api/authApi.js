@@ -1,10 +1,20 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
+import instance from "../axios";
 
-export const loginAsync = createAsyncThunk('auth/login', async (loginData) => {
+export const loginAsync = createAsyncThunk('auth/login', async (loginData, { rejectWithValue }) => {
     try {
         const response = await instance.post('/auth/login', loginData)
-        return response.data.data
+        return response.data
     } catch (error) {
-        console.log(error.response.data.message)
+        return rejectWithValue(error.response.data)
+    }
+})
+
+export const signupAsync = createAsyncThunk('auth/signup', async (data, { rejectWithValue }) => {
+    try {
+        const response = await instance.post('auth/signup', data)
+        return response.data
+    } catch (error) {
+        return rejectWithValue(error.response.data)
     }
 })

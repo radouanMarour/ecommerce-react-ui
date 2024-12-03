@@ -21,7 +21,7 @@
 .signup-page form {
     display: flex;
     flex-direction: column;
-    width: 300px;
+    width: 500px;
     /* Adjust width as needed */
     background-color: var(--background-color);
     /* White background for the form */
