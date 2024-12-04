@@ -1,0 +1,77 @@
+/* CreateCategory.css */
+
+.add-category-page {
+    padding: 2rem;
+}
+
+.add-category-page h1 {
+    color: var(--secondary-color);
+    /* Assumes you have this color variable defined */
+    margin-bottom: 2rem;
+}
+
+.add-category-form {
+    display: flex;
+    flex-direction: column;
+    max-width: 400px;
+    margin: 0 auto;
+    /* Center the form */
+}
+
+.add-category-form label {
+    margin-bottom: 0.5rem;
+    color: var(--text-color);
+    /* Assumes you have this variable defined */
+}
+
+.add-category-form input,
+.add-category-form select {
+    padding: 0.8rem;
+    border: 1px solid var(--border-color);
+    /* Assumes you have this variable defined */
+    border-radius: 5px;
+    margin-bottom: 1rem;
+    outline: none;
+}
+
+.submit-button {
+    background-color: var(--secondary-color);
+    color: var(--primary-color);
+    /* Assumes you have this variable defined */
+    padding: 1rem 1.5rem;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.submit-button:hover {
+    background-color: var(--hover-color);
+    /* Assumes you have this variable defined */
+}
+
+.submit-button:disabled {
+    opacity: 0.7;
+    cursor: not-allowed;
+}
+
+.message {
+    margin-top: 1rem;
+    text-align: center;
+}
+
+.message.success {
+    color: green;
+}
+
+.message.error {
+    color: red;
+}
+
+
+/* Responsive adjustments (optional) */
+@media (max-width: 450px) {
+    .add-category-form {
+        max-width: 100%;
+    }
+}

@@ -13,6 +13,7 @@ import SearchResults from './pages/SearchResults';
 import CreateProduct from './pages/CreateProduct';
 import './App.css'
 import Header from './components/Header';
+import CreateCategory from './pages/CreateCategory';
 
 const App = () => {
   return (
@@ -46,6 +47,7 @@ const App = () => {
         {/* Create Product (Admin ) */}
         <Route path="/admin/dashboard" element={<Dashboard />} />
         <Route path="/admin/create-product" element={<CreateProduct />} />
+        <Route path="/admin/create-category" element={<CreateCategory />} />
       </Routes>
     </Router>
   );

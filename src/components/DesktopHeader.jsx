@@ -6,8 +6,9 @@ import { useDispatch, useSelector } from 'react-redux';
 import { logout } from '../redux/slices/authSlice';
 
 const DesktopHeader = () => {
-    const { isAuthenticated } = useSelector(state => state.auth)
+    const { isAuthenticated, user } = useSelector(state => state.auth)
     const dispatch = useDispatch()
+
     return (
         <header className="desktop-header">
             <div className="desktop-logo">
@@ -56,6 +57,7 @@ const DesktopHeader = () => {
                             isAuthenticated ?
                                 <>
                                     <Link to="/account">Account</Link>
+                                    {user.role === "admin" && <Link to="/admin/dashboard">Dashboard</Link>}
                                     <button onClick={() => dispatch(logout())}>Logout</button>
                                 </> :
                                 <>

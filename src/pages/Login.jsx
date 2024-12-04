@@ -15,11 +15,11 @@ const Login = () => {
     const navigate = useNavigate()
 
 
-    const handleLogin = (e) => {
+    const handleLogin = async (e) => {
         e.preventDefault();
         dispatch(clear())
-        dispatch(loginAsync({ email, password }))
-        navigate("/")
+        const result = await dispatch(loginAsync({ email, password })).unwrap()
+        result && navigate("/")
     };
 
     return (

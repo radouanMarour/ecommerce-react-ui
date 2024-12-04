@@ -1,6 +1,3 @@
-/* Assuming you're importing the :root variables from a separate stylesheet */
-/* ...your :root variables from previous response... */
-
 .desktop-header {
     display: flex;
     justify-content: space-between;
@@ -44,12 +41,16 @@
 .search-icon {
     padding: 0.5rem;
     color: var(--secondary-color);
-    /* Deep Blue icon */
     cursor: pointer;
+}
+
+.search-icon svg {
+    font-size: 2rem;
 }
 
 .desktop-nav {
     display: flex;
+    align-items: center;
     list-style: none;
     margin: 0;
     padding: 0;
@@ -101,6 +102,10 @@
     cursor: pointer;
     background-color: transparent;
     text-align: left;
+}
+
+.dropdown-content a:first-child {
+    margin-top: 1.5rem;
 }
 
 .dropdown-content a:hover,

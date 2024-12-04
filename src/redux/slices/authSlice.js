@@ -1,10 +1,11 @@
 import { createSlice } from '@reduxjs/toolkit'
 import { loginAsync, signupAsync } from '../../api/authApi';
+import { saveToLocalStorage, getFromLocalStorage, removeFromLocalStorage } from '../../localStorage'
 
 const initialState = {
-    isAuthenticated: false,
-    user: null,
-    token: null,
+    isAuthenticated: getFromLocalStorage('isAuthenticated') || false,
+    user: getFromLocalStorage('user') || null,
+    token: getFromLocalStorage('token') || null,
     status: 'idle',
     error: null,
     message: null
@@ -23,6 +24,10 @@ const authSlice = createSlice({
             state.user = null
             state.token = null
             state.status = 'idle'
+
+            removeFromLocalStorage('isAuthenticated')
+            removeFromLocalStorage('user')
+            removeFromLocalStorage('token')
         }
     },
     extraReducers: (builder) => {
@@ -35,6 +40,10 @@ const authSlice = createSlice({
                 state.isAuthenticated = true;
                 state.user = action.payload.data;
                 state.token = action.payload.token
+
+                saveToLocalStorage('isAuthenticated', true)
+                saveToLocalStorage('user', action.payload.data)
+                saveToLocalStorage('token', action.payload.token)
             })
             .addCase(loginAsync.rejected, (state, action) => {
                 state.status = "failed"

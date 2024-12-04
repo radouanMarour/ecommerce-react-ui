@@ -1,4 +1,4 @@
-/* Assuming you've already imported the :root variables */
+/* Profile.css */
 
 .profile-page {
     padding: 2rem;
@@ -6,59 +6,68 @@
 
 .profile-page h1 {
     color: var(--secondary-color);
-    /* Deep blue heading */
+    /* Assuming you have this variable defined */
     margin-bottom: 2rem;
 }
 
-.profile-container {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    /* Responsive grid */
-    grid-gap: 2rem;
+/* Tab Navigation */
+.tabs {
+    display: flex;
+    margin-bottom: 2rem;
 }
 
-.user-info,
-.order-history,
-.change-password {
+.tab {
+    padding: 1rem 2rem;
+    border: 1px solid var(--border-color);
+    /* Assuming you have this variable defined */
+    border-radius: 5px 5px 0 0;
+    /* Rounded top corners */
+    background-color: var(--tertiary-color);
+    /* Light gray background */
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    border-bottom: none;
+    /* Remove bottom border for active tab */
+    color: var(--text-color);
+}
+
+.tab.active {
+    background-color: var(--secondary-color);
+    /* Deep blue background for active tab */
+    color: var(--primary-color);
+    /* White text for active tab */
+    border-bottom: 3px solid var(--secondary-color);
+}
+
+/* Tab Content */
+.tab-content {
     border: 1px solid var(--border-color);
     /* Light gray border */
     padding: 1rem;
     border-radius: 5px;
+    background-color: var(--background-color);
 }
 
-.user-info h2,
-.order-history h2,
-.change-password h2 {
-    color: var(--secondary-color);
-    /* Deep blue heading */
-    margin-bottom: 1rem;
-}
-
-.user-info label,
-.change-password label {
+/* Profile Information */
+.profile-info label {
     display: block;
     margin-bottom: 0.5rem;
     color: var(--text-color);
-    /* Dark gray label text */
 }
 
-.user-info input,
-.change-password input {
+.profile-info input {
     width: 100%;
     padding: 0.8rem;
     border: 1px solid var(--border-color);
-    /* Light gray border */
     border-radius: 5px;
-    margin-bottom: 1rem;
     outline: none;
+    margin-bottom: 1rem;
 }
 
-.update-button,
-.change-password-button {
+
+.update-button {
     background-color: var(--secondary-color);
-    /* Deep blue button */
     color: var(--primary-color);
-    /* White text */
     padding: 1rem 1.5rem;
     border: none;
     border-radius: 5px;
@@ -66,32 +75,51 @@
     transition: background-color 0.3s ease;
 }
 
-.update-button:hover,
-.change-password-button:hover {
+.update-button:hover {
     background-color: var(--hover-color);
-    /* Slightly darker blue on hover */
 }
 
-.order-history ul {
-    list-style: none;
-    padding: 0;
+
+/* Order History Table */
+.order-history table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 1rem;
 }
 
-.order-history li {
+.order-history th,
+.order-history td {
+    border: 1px solid var(--border-color);
+    padding: 0.8rem;
+    text-align: left;
+}
+
+.order-history th {
+    background-color: var(--tertiary-color);
     color: var(--text-color);
-    /* Dark gray text */
-    margin-bottom: 0.5rem;
+    font-weight: bold;
 }
 
-.order-history li span {
-    display: block;
-    margin-bottom: 0.2rem;
+.order-history a {
+    color: var(--secondary-color);
+    text-decoration: none;
+}
+
+.order-history a:hover {
+    text-decoration: underline;
 }
 
 /*Responsive adjustments (optional)*/
 @media (max-width: 768px) {
-    .profile-container {
-        grid-template-columns: 1fr;
-        /* Stack sections vertically on smaller screens */
+    .tabs {
+        flex-direction: column;
     }
+
+    .tab {
+        border-radius: 5px;
+        /* Adjust border radius */
+        margin-bottom: 0.5rem;
+        /* Add margin between tabs */
+    }
+
 }

@@ -47,6 +47,9 @@ const Dashboard = () => {
                     <Link to="/admin/create-product" className="action-card">
                         Add New Product
                     </Link>
+                    <Link to="/admin/create-category" className="action-card">
+                        Add New Category
+                    </Link>
                     <Link to="/admin/manage-products" className="action-card">
                         Manage Products
                     </Link>
