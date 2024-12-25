@@ -2,9 +2,16 @@ import React, { useState } from 'react'
 import { Link } from 'react-router-dom'
 import AccountCircleOutlinedIcon from '@mui/icons-material/AccountCircleOutlined';
 import ShoppingCartOutlinedIcon from '@mui/icons-material/ShoppingCartOutlined';
+import { logoutUser } from '../redux/slices/authSlice';
+import { useDispatch } from 'react-redux';
 
 const PostLogin = () => {
     const [dropdownOpen, setDropdownOpen] = useState(false);
+    const dispatch = useDispatch();
+
+    const handleLogout = () => {
+        dispatch(logoutUser());
+    }
 
     return (
         <div className="flex gap-x-4 relative">
@@ -40,7 +47,10 @@ const PostLogin = () => {
                         </Link>
                     </li>
                     <li>
-                        <button className="w-full text-left block hover:bg-blue-100 px-2 py-1">
+                        <button
+                            className="w-full text-left block hover:bg-blue-100 px-2 py-1"
+                            onClick={() => handleLogout()}
+                        >
                             Logout
                         </button>
                     </li>

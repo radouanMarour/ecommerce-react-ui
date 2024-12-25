@@ -26,7 +26,7 @@ const categories = [
 ];
 
 const MobileHeader = () => {
-    const { loggedIN } = useSelector(state => state.auth)
+    const { isAuthenticated } = useSelector(state => state.auth)
     const [dropdownOpen, setDropdownOpen] = useState(false);
     const [accountOpen, setAccountOpen] = useState(false);
     const [activeCategory, setActiveCategory] = useState(null);
@@ -111,7 +111,7 @@ const MobileHeader = () => {
                 >
                     <ul className="w-full relative">
                         {
-                            loggedIN ?
+                            isAuthenticated ?
                                 <>
                                     <li>
                                         <Link to="/profile" className="block hover:bg-blue-100 px-2 py-1">

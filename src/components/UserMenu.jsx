@@ -1,14 +1,22 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import PreLogin from './PreLogin';
 import PostLogin from './PostLogin';
 import { useSelector } from 'react-redux'
 
 const UserMenu = () => {
-    const { loggedIn } = useSelector(state => state.auth)
+    const { isAuthenticated } = useSelector(state => state.auth)
+
+    useEffect(() => {
+        if (isAuthenticated) {
+            console.log('User is authenticated');
+        } else {
+            console.log('User is not authenticated');
+        }
+    }, [isAuthenticated]);
 
     return (
         <>
-            {loggedIn ? <PostLogin /> : <PreLogin />}
+            {isAuthenticated ? <PostLogin /> : <PreLogin />}
         </>
 
     )
