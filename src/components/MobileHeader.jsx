@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import MenuOutlinedIcon from '@mui/icons-material/MenuOutlined';
 import CloseOutlinedIcon from '@mui/icons-material/CloseOutlined';
 import ExpandMoreOutlinedIcon from '@mui/icons-material/ExpandMoreOutlined';
@@ -8,28 +8,20 @@ import AccountCircleOutlinedIcon from '@mui/icons-material/AccountCircleOutlined
 import Logo from '../assets/logo.png';
 import { Link } from 'react-router-dom';
 import Search from './Search';
-import { useSelector } from 'react-redux';
-
-const categories = [
-    {
-        category: 'Clothing',
-        subcategories: ['T-Shirts', 'Shirts', 'Polo Shirts', 'Sweaters'],
-    },
-    {
-        category: 'Footwear',
-        subcategories: ['Casual Shoes', 'Formal Shoes', 'Sneakers', 'Boots'],
-    },
-    {
-        category: 'Accessories',
-        subcategories: ['Watches', 'Belts', 'Wallets', 'Sunglasses'],
-    }
-];
+import { useDispatch, useSelector } from 'react-redux';
+import { fetchCategories } from '../api/categoryApi';
 
 const MobileHeader = () => {
     const { isAuthenticated } = useSelector(state => state.auth)
+    const { categories } = useSelector(state => state.category)
     const [dropdownOpen, setDropdownOpen] = useState(false);
     const [accountOpen, setAccountOpen] = useState(false);
     const [activeCategory, setActiveCategory] = useState(null);
+    const dispatch = useDispatch()
+
+    useEffect(() => {
+        dispatch(fetchCategories())
+    }, [dispatch])
 
     const toggleCategory = (index) => {
         setActiveCategory((prev) => (prev === index ? null : index));
@@ -53,35 +45,37 @@ const MobileHeader = () => {
                 onMouseLeave={() => setDropdownOpen(false)}
             >
                 <ul className="divide-y divide-slate-200">
-                    {categories.map((cat, index) => (
-                        <li key={index} className="p-2">
-                            <div
-                                className="flex justify-between items-center cursor-pointer"
-                                onClick={() => toggleCategory(index)}
-                            >
-                                <span className="font-medium">{cat.category}</span>
-                                {activeCategory === index ? (
-                                    <ExpandLessOutlinedIcon />
-                                ) : (
-                                    <ExpandMoreOutlinedIcon />
+                    {categories.map((cat, index) => {
+                        if (!cat.parent)
+                            return (<li key={index} className="p-2">
+                                <div
+                                    className="flex justify-between items-center cursor-pointer"
+                                    onClick={() => toggleCategory(index)}
+                                >
+                                    <span className="font-medium">{cat.name}</span>
+                                    {activeCategory === index ? (
+                                        <ExpandLessOutlinedIcon />
+                                    ) : (
+                                        <ExpandMoreOutlinedIcon />
+                                    )}
+                                </div>
+                                {activeCategory === index && (
+                                    <ul className="mt-2 pl-4 space-y-1">
+                                        {cat.subcategories.map((subcat, subIndex) => (
+                                            <li key={subIndex}>
+                                                <Link
+                                                    to="/"
+                                                    className="block hover:bg-blue-100 px-2 py-1 rounded"
+                                                >
+                                                    {subcat.name}
+                                                </Link>
+                                            </li>
+                                        ))}
+                                    </ul>
                                 )}
-                            </div>
-                            {activeCategory === index && (
-                                <ul className="mt-2 pl-4 space-y-1">
-                                    {cat.subcategories.map((subcat, subIndex) => (
-                                        <li key={subIndex}>
-                                            <Link
-                                                to="/"
-                                                className="block hover:bg-blue-100 px-2 py-1 rounded"
-                                            >
-                                                {subcat}
-                                            </Link>
-                                        </li>
-                                    ))}
-                                </ul>
-                            )}
-                        </li>
-                    ))}
+                            </li>
+                            )
+                    })}
                 </ul>
             </div>
 
