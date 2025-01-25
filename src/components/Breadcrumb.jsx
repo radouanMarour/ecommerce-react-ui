@@ -12,15 +12,26 @@ const Breadcrumb = ({ homeLabel = 'Home' }) => {
             path: `/${arr.slice(0, index + 1).join('/')}`,
         }));
 
-
     const breadcrumbs = [
         { name: homeLabel, path: '/' },
         ...pathSegments,
     ];
-
+    // console.log(breadcrumbs)
+    const segmentExists = breadcrumbs.find((breadcrumb) => {
+        return breadcrumb.name === 'login' ||
+            breadcrumb.name === 'register' ||
+            breadcrumb.name === 'dashboard' ||
+            breadcrumb.name === 'checkout' ||
+            breadcrumb.name === 'cart'
+    }) || breadcrumbs.length === 1 || !pathSegments.every(segment =>
+        ['products', 'orders', 'profile', 'admin'].includes(segment.name)
+    );
     return (
-        <nav aria-label="breadcrumb" className="h-4 mx-6 mb-4 pt-4 md:pt-20">
-            <ol className="flex items-center text-sm text-gray-500">
+        <nav
+            aria-label="breadcrumb"
+            className={`mx-8 pt-4 md:pt-20 ${segmentExists ? 'hidden' : 'block'}`}
+        >
+            <ol className="flex items-center text-sm text-gray-600">
                 {breadcrumbs.map((breadcrumb, index) => (
                     <li key={index} className="flex items-center">
                         <Link to={breadcrumb.path} className="hover:text-blue-600">

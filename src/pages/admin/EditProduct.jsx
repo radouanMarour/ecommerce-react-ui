@@ -11,6 +11,7 @@ import AddVariant from '../../components/admin/AddVariant';
 import { Delete, FileUploadOutlined } from '@mui/icons-material';
 
 const EditProduct = () => {
+    const { token } = useSelector((state) => state.auth);
     const { categories } = useSelector((state) => state.category);
     const { product, loading, error, message } = useSelector((state) => state.product);
     const { id } = useParams();
@@ -119,9 +120,9 @@ const EditProduct = () => {
         if (formData.images.length === 0) {
             delete formData.images;
         }
-        const response = await dispatch(updateProduct({ productId: id, formData })).unwrap();
-        if (response.product)
-            navigate('/dashboard/products');
+        const response = await dispatch(updateProduct({ productId: id, formData, token })).unwrap();
+        if (response)
+            navigate('/admin/dashboard/products');
     };
 
     return (

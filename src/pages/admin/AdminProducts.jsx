@@ -40,7 +40,7 @@ const AdminProducts = () => {
             <h2 className="text-2xl font-semibold mb-4">Manage Products</h2>
 
             <Link
-                to="/dashboard/products/add"
+                to="/admin/dashboard/products/add"
                 className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline mb-4 inline-block"
             >
                 <AddIcon /> Add Product
@@ -80,7 +80,7 @@ const AdminProducts = () => {
                                         </button>
                                     </td>
                                     <td className="border px-4 py-2">
-                                        <Link to={`/dashboard/products/edit/${product._id}`}
+                                        <Link to={`/admin/dashboard/products/edit/${product._id}`}
                                             className="text-blue-500 hover:text-blue-700 mr-2"
                                         >
                                             <EditIcon />

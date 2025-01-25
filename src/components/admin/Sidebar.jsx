@@ -19,11 +19,11 @@ const Sidebar = () => {
 
     // Define the menu items in an array
     const menuItems = [
-        { name: 'Home', path: '/dashboard', icon: <HomeIcon className="md:mr-2" /> },
-        { name: 'Products', path: '/dashboard/products', icon: <ShoppingCartIcon className="md:mr-2" /> },
-        { name: 'Categories', path: '/dashboard/categories', icon: <CategoryIcon className="md:mr-2" /> },
-        { name: 'Orders', path: '/dashboard/orders', icon: <ShoppingCartIcon className="md:mr-2" /> },
-        { name: 'Users', path: '/dashboard/users', icon: <PeopleIcon className="md:mr-2" /> },
+        { name: 'Home', path: '/admin/dashboard', icon: <HomeIcon className="md:mr-2" /> },
+        { name: 'Products', path: '/admin/dashboard/products', icon: <ShoppingCartIcon className="md:mr-2" /> },
+        { name: 'Categories', path: '/admin/dashboard/categories', icon: <CategoryIcon className="md:mr-2" /> },
+        { name: 'Orders', path: '/admin/dashboard/orders', icon: <ShoppingCartIcon className="md:mr-2" /> },
+        { name: 'Users', path: '/admin/dashboard/users', icon: <PeopleIcon className="md:mr-2" /> },
     ];
 
     return (

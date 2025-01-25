@@ -32,11 +32,13 @@ const LoginPage = () => {
         });
     };
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
         dispatch(clearMessage());
-        dispatch(loginUser(formData));
-        navigate('/');
+        const response = await dispatch(loginUser(formData)).unwrap();
+        if (!response.error) {
+            navigate('/')
+        };
     };
 
     return (

@@ -62,7 +62,7 @@ const productSlice = createSlice({
             })
             .addCase(productApi.updateProduct.fulfilled, (state, action) => {
                 state.loading = false;
-                const updatedProduct = action.payload.product
+                const updatedProduct = action.payload
                 state.products = state.products.map(
                     product => product._id === updatedProduct._id ? updatedProduct : product
                 )
@@ -78,12 +78,23 @@ const productSlice = createSlice({
             })
             .addCase(productApi.deleteProduct.fulfilled, (state, action) => {
                 state.loading = false;
-                state.products = state.products.filter((product) => product._id !== action.payload.productId);
+                state.products = state.products.filter((product) => product._id !== action.payload);
                 state.message = action.payload.message;
             })
             .addCase(productApi.deleteProduct.rejected, (state, action) => {
                 state.loading = false;
                 state.error = action.payload.error;
+            })
+            .addCase(productApi.addProductReview.pending, (state, action) => {
+                state.loading = true;
+            })
+            .addCase(productApi.addProductReview.fulfilled, (state, action) => {
+                state.loading = false;
+                state.product = action.payload
+            })
+            .addCase(productApi.addProductReview.rejected, (state, action) => {
+                state.loading = false;
+                state.error = action.payload.error
             });
     }
 });

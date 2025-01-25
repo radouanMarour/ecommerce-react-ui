@@ -9,6 +9,8 @@ import instance from '../../utils/axios';
 import Loader from '../../components/Loader';
 
 const EditCategory = () => {
+    const { token } = useSelector((state) => state.auth);
+
     const { categories, category, loading, error, message } = useSelector((state) => state.category);
     const { id } = useParams();
     const navigate = useNavigate();
@@ -76,7 +78,7 @@ const EditCategory = () => {
         if (formData.parent === '') {
             delete formData.parent;
         }
-        const response = await dispatch(updateCategory({ categoryId: id, formData })).unwrap();
+        const response = await dispatch(updateCategory({ categoryId: id, formData, token })).unwrap();
         if (response.category)
             navigate('/dashboard/categories');
     };

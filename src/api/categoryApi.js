@@ -6,7 +6,7 @@ export const fetchCategories = createAsyncThunk(
     async (_, { rejectWithValue }) => {
         try {
             const response = await instance.get('/categories');
-            return response.data;
+            return response.data.data;
         } catch (error) {
             return rejectWithValue(error.response?.data || 'Failed to fetch categories');
         }
@@ -18,7 +18,7 @@ export const fetchCategoryById = createAsyncThunk(
     async (categoryId, { rejectWithValue }) => {
         try {
             const response = await instance.get(`/categories/${categoryId}`);
-            return response.data;
+            return response.data.data;
         } catch (error) {
             return rejectWithValue(error.response?.data || 'Failed to fetch category');
         }
@@ -27,10 +27,14 @@ export const fetchCategoryById = createAsyncThunk(
 
 export const createCategory = createAsyncThunk(
     'category/createCategory',
-    async (formData, { rejectWithValue }) => {
+    async ({ formData, token }, { rejectWithValue }) => {
         try {
-            const response = await instance.post('/categories', formData);
-            return response.data;
+            const response = await instance.post('/categories', formData, {
+                headers: {
+                    Authorization: `Bearer ${token}`
+                }
+            });
+            return response.data.data;
         } catch (error) {
             return rejectWithValue(error.response?.data || 'Failed to create category');
         }
@@ -39,10 +43,14 @@ export const createCategory = createAsyncThunk(
 
 export const updateCategory = createAsyncThunk(
     'category/updateCategory',
-    async ({ categoryId, formData }, { rejectWithValue }) => {
+    async ({ categoryId, formData, token }, { rejectWithValue }) => {
         try {
-            const response = await instance.put(`/categories/${categoryId}`, formData);
-            return response.data;
+            const response = await instance.put(`/categories/${categoryId}`, formData, {
+                headers: {
+                    Authorization: `Bearer ${token}`
+                }
+            });
+            return response.data.data;
         } catch (error) {
             return rejectWithValue(error.response?.data || 'Failed to update category');
         }
@@ -51,10 +59,14 @@ export const updateCategory = createAsyncThunk(
 
 export const deleteCategory = createAsyncThunk(
     'category/deleteCategory',
-    async (categoryId, { rejectWithValue }) => {
+    async ({ categoryId, token }, { rejectWithValue }) => {
         try {
-            const response = await instance.delete(`/categories/${categoryId}`);
-            return response.data;
+            const response = await instance.delete(`/categories/${categoryId}`, {
+                headers: {
+                    Authorization: `Bearer ${token}`
+                }
+            });
+            return response.data.data;
         } catch (error) {
             return rejectWithValue(error.response?.data || 'Failed to delete category');
         }

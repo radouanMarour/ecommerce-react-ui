@@ -8,6 +8,7 @@ import { clearMessage } from '../../redux/slices/categorySlice';
 import Spinner from '../../components/Spinner';
 
 const AddCategory = () => {
+    const { token } = useSelector((state) => state.auth);
     const navigate = useNavigate();
     const dispatch = useDispatch();
     const [formData, setFormData] = useState({ name: '', image: "", parent: null });
@@ -54,7 +55,7 @@ const AddCategory = () => {
         if (formData.parent === '') {
             delete formData.parent;
         }
-        dispatch(createCategory(formData));
+        dispatch(createCategory({ formData, token }));
     };
 
     return (

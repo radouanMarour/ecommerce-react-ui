@@ -13,6 +13,7 @@ import { fetchCategories } from '../api/categoryApi';
 
 const MobileHeader = () => {
     const { isAuthenticated } = useSelector(state => state.auth)
+    const { items } = useSelector(state => state.cart);
     const { categories } = useSelector(state => state.category)
     const [dropdownOpen, setDropdownOpen] = useState(false);
     const [accountOpen, setAccountOpen] = useState(false);
@@ -28,119 +29,125 @@ const MobileHeader = () => {
     };
 
     return (
-        <div className="h-12 relative px-6 shadow-md flex justify-between items-center">
+        <div className="h-14 relative px-4 md:px-6 shadow-md flex justify-between items-center bg-white">
             {/* Hamburger Menu */}
-            <div onClick={() => setDropdownOpen(!dropdownOpen)}>
+            <div className="p-2 hover:bg-gray-100 rounded-full transition-colors"
+                onClick={() => setDropdownOpen(!dropdownOpen)}>
                 {
                     dropdownOpen ?
-                        <CloseOutlinedIcon className="text-slate-800 font-bold cursor-pointer" /> :
-                        <MenuOutlinedIcon className="text-slate-800 font-bold cursor-pointer" />
+                        <CloseOutlinedIcon className="text-slate-800 cursor-pointer" /> :
+                        <MenuOutlinedIcon className="text-slate-800 cursor-pointer" />
                 }
             </div>
 
             {/* Accordion Menu */}
             <div
-                className={`${dropdownOpen ? 'absolute' : 'hidden'
-                    } top-full left-0 w-full bg-white shadow-md z-10`}
+                className={`${dropdownOpen
+                    ? 'absolute opacity-100 translate-y-0'
+                    : 'absolute opacity-0 -translate-y-2 pointer-events-none'
+                    } top-full left-0 w-full bg-white shadow-lg z-50 transition-all duration-200 ease-in-out`}
                 onMouseLeave={() => setDropdownOpen(false)}
             >
-                <ul className="divide-y divide-slate-200">
+                <ul className="divide-y divide-slate-100">
                     {categories.map((cat, index) => {
                         if (!cat.parent)
-                            return (<li key={index} className="p-2">
-                                <div
-                                    className="flex justify-between items-center cursor-pointer"
-                                    onClick={() => toggleCategory(index)}
-                                >
-                                    <span className="font-medium">{cat.name}</span>
-                                    {activeCategory === index ? (
-                                        <ExpandLessOutlinedIcon />
-                                    ) : (
-                                        <ExpandMoreOutlinedIcon />
+                            return (
+                                <li key={index} className="hover:bg-gray-50">
+                                    <div
+                                        className="flex justify-between items-center cursor-pointer p-3 transition-colors"
+                                        onClick={() => toggleCategory(index)}
+                                    >
+                                        <span className="font-medium text-slate-800">{cat.name}</span>
+                                        {activeCategory === index ? (
+                                            <ExpandLessOutlinedIcon className="text-slate-600" />
+                                        ) : (
+                                            <ExpandMoreOutlinedIcon className="text-slate-600" />
+                                        )}
+                                    </div>
+                                    {activeCategory === index && (
+                                        <ul className="bg-gray-50 py-2">
+                                            {cat.subcategories.map((subcat, subIndex) => (
+                                                <li key={subIndex}>
+                                                    <Link
+                                                        to="/"
+                                                        className="block px-6 py-2 hover:bg-gray-100 transition-colors text-slate-700"
+                                                    >
+                                                        {subcat.name}
+                                                    </Link>
+                                                </li>
+                                            ))}
+                                        </ul>
                                     )}
-                                </div>
-                                {activeCategory === index && (
-                                    <ul className="mt-2 pl-4 space-y-1">
-                                        {cat.subcategories.map((subcat, subIndex) => (
-                                            <li key={subIndex}>
-                                                <Link
-                                                    to="/"
-                                                    className="block hover:bg-blue-100 px-2 py-1 rounded"
-                                                >
-                                                    {subcat.name}
-                                                </Link>
-                                            </li>
-                                        ))}
-                                    </ul>
-                                )}
-                            </li>
+                                </li>
                             )
                     })}
                 </ul>
             </div>
 
             {/* Logo */}
-            <div className="h-full">
-                <Link to="/" className="h-full">
+            <div className="h-full py-2">
+                <Link to="/" className="h-full block">
                     <img src={Logo} alt="Logo" className="h-full w-32 object-contain" />
                 </Link>
             </div>
 
             {/* Search and Cart */}
-            <div className="flex gap-x-6">
+            <div className="flex items-center gap-x-4">
                 <Search isDesktop={false} />
-                <Link to="/cart" className="px-0 block relative transition-all">
-                    <ShoppingCartOutlinedIcon />
-                    <span className="absolute -top-1 -right-2 text-white font-bold bg-slate-800 w-5 h-5 flex justify-center items-center rounded-full p-1">
-                        0
+                <Link to="/cart" className="p-2 block relative hover:bg-gray-100 rounded-full transition-colors">
+                    <ShoppingCartOutlinedIcon className="text-slate-800" />
+                    <span className="absolute -top-1 -right-1 text-white text-xs font-bold bg-slate-800 w-5 h-5 flex justify-center items-center rounded-full">
+                        {items.length}
                     </span>
                 </Link>
-                <div onClick={() => setAccountOpen(true)}>
-                    <AccountCircleOutlinedIcon className='cursor-pointer' />
-                </div>
                 <div
-                    className={`${accountOpen ? 'absolute' : 'hidden'
-                        } top-full right-0 w-1/3 bg-white shadow-md z-10`}
+                    className="p-2 hover:bg-gray-100 rounded-full transition-colors cursor-pointer"
+                    onClick={() => setAccountOpen(true)}
+                >
+                    <AccountCircleOutlinedIcon className="text-slate-800" />
+                </div>
+
+                {/* Account Dropdown */}
+                <div
+                    className={`${accountOpen
+                        ? 'absolute opacity-100 translate-y-0'
+                        : 'absolute opacity-0 -translate-y-2 pointer-events-none'
+                        } top-full right-0 w-48 bg-white shadow-lg z-50 rounded-md overflow-hidden transition-all duration-200 ease-in-out mt-1`}
                     onMouseLeave={() => setAccountOpen(false)}
                 >
-                    <ul className="w-full relative">
-                        {
-                            isAuthenticated ?
-                                <>
-                                    <li>
-                                        <Link to="/profile" className="block hover:bg-blue-100 px-2 py-1">
-                                            My Account
-                                        </Link>
-                                    </li>
-                                    <li>
-                                        <Link to="/orders" className="block hover:bg-blue-100 px-2 py-1">
-                                            Orders
-                                        </Link>
-                                    </li>
-                                    <li>
-                                        <Link to="/wishlist" className="block hover:bg-blue-100 px-2 py-1">
-                                            Wishlist
-                                        </Link>
-                                    </li>
-                                    <li>
-                                        <button className="w-full text-left block hover:bg-blue-100 px-2 py-1">
-                                            Logout
-                                        </button>
-                                    </li>
-                                </> :
-                                <>
-                                    <li>
-                                        <Link to="/register" className="block hover:bg-blue-100 px-2 py-1">
-                                            Register
-                                        </Link>
-                                    </li>
-                                    <li>
-                                        <Link to="/login" className="block hover:bg-blue-100 px-2 py-1">
-                                            Login
-                                        </Link>
-                                    </li>
-                                </>
-                        }
+                    <ul className="py-1">
+                        {isAuthenticated ? (
+                            <>
+                                <li>
+                                    <Link to="/profile" className="block px-4 py-2 text-slate-700 hover:bg-gray-100 transition-colors">
+                                        My Account
+                                    </Link>
+                                </li>
+                                <li>
+                                    <Link to="/orders/myorders" className="block px-4 py-2 text-slate-700 hover:bg-gray-100 transition-colors">
+                                        Orders
+                                    </Link>
+                                </li>
+                                <li>
+                                    <button className="w-full text-left px-4 py-2 text-slate-700 hover:bg-gray-100 transition-colors">
+                                        Logout
+                                    </button>
+                                </li>
+                            </>
+                        ) : (
+                            <>
+                                <li>
+                                    <Link to="/register" className="block px-4 py-2 text-slate-700 hover:bg-gray-100 transition-colors">
+                                        Register
+                                    </Link>
+                                </li>
+                                <li>
+                                    <Link to="/login" className="block px-4 py-2 text-slate-700 hover:bg-gray-100 transition-colors">
+                                        Login
+                                    </Link>
+                                </li>
+                            </>
+                        )}
                     </ul>
                 </div>
             </div>

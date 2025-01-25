@@ -7,7 +7,7 @@ import UserMenu from './UserMenu'
 
 const DescktopHeader = () => {
     return (
-        <div className='h-16 fixed w-full z-10 bg-white px-6 shadow-md flex justify-between items-center'>
+        <div className='h-16 fixed top-0 w-full z-50 bg-white px-8 shadow-md flex justify-between items-center'>
             <div className="">
                 <Link to="/" className=''>
                     <img src={Logo} alt="Logo" className='w-32 object-contain' />

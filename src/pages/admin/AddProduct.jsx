@@ -11,6 +11,7 @@ import AddVariant from '../../components/admin/AddVariant';
 import { Delete, DeleteOutline, FileUpload, FileUploadOutlined } from '@mui/icons-material';
 
 const AddProduct = () => {
+    const { token } = useSelector((state) => state.auth);
     const { categories } = useSelector((state) => state.category);
     const { loading, error, message } = useSelector((state) => state.product);
     const navigate = useNavigate();
@@ -60,20 +61,22 @@ const AddProduct = () => {
         setFilePreviews(previews);
         const response = await instance.post('/upload/multiple', data, {
             headers: {
-                'Content-Type': 'multipart/form-data'
+                Authorization: `Bearer ${token}`,
+                'Content-Type': 'multipart/form-data',
             },
             onUploadProgress: (progressEvent) => {
                 setUploadProgress(Math.round((progressEvent.loaded / progressEvent.total) * 100));
             }
         });
-        if (response.data.fileUrls && response.data.fileUrls.length > 0) {
+        console.log(response.data.data)
+        if (response.data.data && response.data.data.length > 0) {
             notifySuccess("Images uploaded successfully")
         } else {
             notifyError("Failed to upload the images, try again")
         }
         setFormData({
             ...formData,
-            images: response.data.fileUrls
+            images: response.data.data
         });
     };
 
@@ -98,7 +101,7 @@ const AddProduct = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        dispatch(createProduct(formData));
+        dispatch(createProduct({ formData, token }));
     };
 
     return (
@@ -293,7 +296,7 @@ const AddProduct = () => {
                         </button>
                         <button
                             type="button"
-                            onClick={() => navigate('/dashboard/products')}
+                            onClick={() => navigate('/admin/dashboard/products')}
                             className="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-gray-600 hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500 ml-4"
                         >
                             Cancel

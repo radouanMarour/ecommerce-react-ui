@@ -11,7 +11,7 @@ export const fetchProducts = createAsyncThunk(
             } else {
                 response = await instance.get('/products');
             }
-            return response.data;
+            return response.data.data;
         } catch (error) {
             return rejectWithValue(error.response?.data || 'Failed to fetch products');
         }
@@ -23,7 +23,7 @@ export const fetchProductById = createAsyncThunk(
     async (productId, { rejectWithValue }) => {
         try {
             const response = await instance.get(`/products/${productId}`);
-            return response.data;
+            return response.data.data;
         } catch (error) {
             return rejectWithValue(error.response?.data || 'Failed to fetch Product');
         }
@@ -32,10 +32,14 @@ export const fetchProductById = createAsyncThunk(
 
 export const createProduct = createAsyncThunk(
     'product/createProduct',
-    async (formData, { rejectWithValue }) => {
+    async ({ formData, token }, { rejectWithValue }) => {
         try {
-            const response = await instance.post('/products', formData);
-            return response.data;
+            const response = await instance.post('/products', formData, {
+                headers: {
+                    Authorization: `Bearer ${token}`
+                }
+            });
+            return response.data.data;
         } catch (error) {
             return rejectWithValue(error.response?.data || 'Failed to create Product');
         }
@@ -44,11 +48,15 @@ export const createProduct = createAsyncThunk(
 
 export const updateProduct = createAsyncThunk(
     'product/updateProduct',
-    async ({ productId, formData }, { rejectWithValue }) => {
+    async ({ productId, formData, token }, { rejectWithValue }) => {
         try {
-            const response = await instance.put(`/products/${productId}`, formData);
+            const response = await instance.put(`/products/${productId}`, formData, {
+                headers: {
+                    Authorization: `Bearer ${token}`
+                }
+            });
             // console.log(response.data);
-            return response.data;
+            return response.data.data;
         } catch (error) {
             // console.log(error.response?.data);
             return rejectWithValue(error.response?.data || 'Failed to update Product');
@@ -58,12 +66,32 @@ export const updateProduct = createAsyncThunk(
 
 export const deleteProduct = createAsyncThunk(
     'product/deleteProduct',
-    async (productId, { rejectWithValue }) => {
+    async ({ productId, token }, { rejectWithValue }) => {
         try {
-            const response = await instance.delete(`/products/${productId}`);
-            return response.data;
+            const response = await instance.delete(`/products/${productId}`, {
+                headers: {
+                    Authorization: `Bearer ${token}`
+                }
+            });
+            return response.data.data;
         } catch (error) {
             return rejectWithValue(error.response?.data || 'Failed to delete Product');
+        }
+    }
+)
+
+export const addProductReview = createAsyncThunk(
+    'product/addProductReview',
+    async ({ productId, reviewData, token }, { rejectWithValue }) => {
+        try {
+            const response = await instance.post(`/products/${productId}/reviews`, reviewData, {
+                headers: {
+                    Authorization: `Bearer ${token}`
+                }
+            });
+            return response.data.data;
+        } catch (error) {
+            return rejectWithValue(error.response?.data || 'Failed to review Product');
         }
     }
 )

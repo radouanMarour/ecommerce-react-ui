@@ -34,7 +34,7 @@ const AdminCategories = () => {
             <h2 className="text-2xl font-semibold mb-4">Manage Categories</h2>
 
             <Link
-                to="/dashboard/categories/add"
+                to="/admin/dashboard/categories/add"
                 className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline mb-4 inline-block"
             >
                 <AddIcon /> Add Category

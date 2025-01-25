@@ -11,6 +11,7 @@ const getInitialState = () => {
     return {
         isAuthenticated: auth?.isAuthenticated || false,
         user: auth?.user || null,
+        token: auth?.token || null,
         loading: false,
         error: null,
         message: null,
@@ -25,6 +26,7 @@ const authSlice = createSlice({
             clearAuthFromLocalStorage();
             state.isAuthenticated = false;
             state.user = null;
+            state.token = null;
             state.error = null;
             state.message = null;
         },
@@ -42,7 +44,8 @@ const authSlice = createSlice({
             .addCase(authApi.loginUser.fulfilled, (state, action) => {
                 state.loading = false;
                 state.isAuthenticated = true;
-                state.user = action.payload.user; // Assuming API response includes user
+                state.user = action.payload.user;
+                state.token = action.payload.token;
                 saveAuthToLocalStorage({ ...action.payload, isAuthenticated: true });
             })
             .addCase(authApi.loginUser.rejected, (state, action) => {
@@ -60,7 +63,25 @@ const authSlice = createSlice({
             .addCase(authApi.registerUser.rejected, (state, action) => {
                 state.loading = false;
                 state.error = action.payload.error;
-            });
+            }).
+            addCase(authApi.updateUserProfile.pending, (state) => {
+                state.loading = true;
+                state.error = null;
+            })
+            .addCase(authApi.updateUserProfile.fulfilled, (state, action) => {
+                state.loading = false;
+                state.user = action.payload;
+                state.message = action.payload.message;
+                saveAuthToLocalStorage({
+                    user: action.payload,
+                    isAuthenticated: true,
+                    token: state.token
+                });
+            })
+            .addCase(authApi.updateUserProfile.rejected, (state, action) => {
+                state.loading = false;
+                state.error = action.payload.error;
+            })
     }
 });
 
