@@ -9,7 +9,7 @@ import Loader from '../components/Loader'
 import { placeOrder } from '../api/orderApi';
 
 const PlaceOrderPage = () => {
-    const { token } = useSelector(state => state.auth)
+    const { token, user } = useSelector(state => state.auth)
     const order = useSelector(state => state.order)
     const { items, loading, shippingAddress, paymentMethod } = useSelector((state) => state.cart);
     const navigate = useNavigate();
@@ -54,7 +54,9 @@ const PlaceOrderPage = () => {
             totalPrice: calculations.orderTotal
         };
         const order = await dispatch(placeOrder({ token, orderData })).unwrap()
-        if (order) {
+        if (order && user.role === 'customer') {
+            navigate(`/orders/${order._id}`)
+        } else if (order && user.role === 'admin') {
             navigate(`/admin/dashboard/orders/${order._id}`)
         }
     };
