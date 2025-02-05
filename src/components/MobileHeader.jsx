@@ -10,9 +10,10 @@ import { Link } from 'react-router-dom';
 import Search from './Search';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchCategories } from '../api/categoryApi';
+import { logoutUser } from '../redux/slices/authSlice';
 
 const MobileHeader = () => {
-    const { isAuthenticated } = useSelector(state => state.auth)
+    const { isAuthenticated, token, user } = useSelector(state => state.auth)
     const { items } = useSelector(state => state.cart);
     const { categories } = useSelector(state => state.category)
     const [dropdownOpen, setDropdownOpen] = useState(false);
@@ -23,6 +24,14 @@ const MobileHeader = () => {
     useEffect(() => {
         dispatch(fetchCategories())
     }, [dispatch])
+
+    useEffect(() => {
+        dispatch(fetchCart(token));
+    }, [dispatch, token]);
+
+    const handleLogout = () => {
+        dispatch(logoutUser());
+    }
 
     const toggleCategory = (index) => {
         setActiveCategory((prev) => (prev === index ? null : index));
@@ -123,6 +132,13 @@ const MobileHeader = () => {
                     <ul className="py-1">
                         {isAuthenticated ? (
                             <>
+                                {user?.role === 'admin' && (
+                                    <li>
+                                        <Link to="/admin/dashboard" className="flex px-4 py-2 text-gray-700 hover:bg-gray-50 transition-colors">
+                                            Dashboard
+                                        </Link>
+                                    </li>
+                                )}
                                 <li>
                                     <Link to="/profile" className="block px-4 py-2 text-slate-700 hover:bg-gray-100 transition-colors">
                                         My Account
@@ -134,7 +150,10 @@ const MobileHeader = () => {
                                     </Link>
                                 </li>
                                 <li>
-                                    <button className="w-full text-left px-4 py-2 text-slate-700 hover:bg-gray-100 transition-colors">
+                                    <button
+                                        className="w-full text-left px-4 py-2 text-slate-700 hover:bg-gray-100 transition-colors"
+                                        onClick={() => handleLogout()}
+                                    >
                                         Logout
                                     </button>
                                 </li>
