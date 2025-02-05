@@ -11,6 +11,7 @@ import Search from './Search';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchCategories } from '../api/categoryApi';
 import { logoutUser } from '../redux/slices/authSlice';
+import { fetchCart } from '../api/cartApi';
 
 const MobileHeader = () => {
     const { isAuthenticated, token, user } = useSelector(state => state.auth)
@@ -28,6 +29,14 @@ const MobileHeader = () => {
     useEffect(() => {
         dispatch(fetchCart(token));
     }, [dispatch, token]);
+
+    useEffect(() => {
+        if (isAuthenticated) {
+            console.log('User is authenticated');
+        } else {
+            console.log('User is not authenticated');
+        }
+    }, [isAuthenticated]);
 
     const handleLogout = () => {
         dispatch(logoutUser());
