@@ -22,10 +22,9 @@ const Breadcrumb = ({ homeLabel = 'Home' }) => {
             breadcrumb.name === 'register' ||
             breadcrumb.name === 'dashboard' ||
             breadcrumb.name === 'checkout' ||
-            breadcrumb.name === 'cart'
-    }) || breadcrumbs.length === 1 || !pathSegments.every(segment =>
-        ['products', 'orders', 'profile', 'admin'].includes(segment.name)
-    );
+            breadcrumb.name === 'orders' ||
+            breadcrumb.name === 'profile'
+    }) || breadcrumbs.length === 1
     return (
         <nav
             aria-label="breadcrumb"

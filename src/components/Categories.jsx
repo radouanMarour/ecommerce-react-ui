@@ -46,7 +46,7 @@ const Categories = () => {
                                     onMouseLeave={() => setActiveCategory(null)}
                                 >
                                     <Link
-                                        to={`/products?category=${cat._id}&categoryName=${encodeURIComponent(cat.name)}`}
+                                        to={`/products?category=${cat.name.toLowerCase()}`}
                                         className='px-4 py-2 hover:bg-blue-50 transition-colors duration-200 flex items-center justify-between'
                                     >
                                         <span>{cat.name}</span>
@@ -71,7 +71,7 @@ const Categories = () => {
                                         {cat.subcategories.map((subcat, subIndex) => (
                                             <li key={subIndex}>
                                                 <Link
-                                                    to={`/products?category=${subcat._id}&categoryName=${encodeURIComponent(subcat.name)}`}
+                                                    to={`/products?category=${cat.name.toLowerCase()}&subcategory=${subcat.name.toLowerCase()}`}
                                                     className='block px-4 py-2 hover:bg-blue-50 transition-colors duration-200'
                                                 >
                                                     {subcat.name}

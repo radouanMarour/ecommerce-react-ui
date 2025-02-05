@@ -76,9 +76,13 @@ export const payOrder = createAsyncThunk("order/payOrder",
 
 export const deleteOrder = createAsyncThunk(
     'order/deleteOrder',
-    async (orderId, { rejectWithValue }) => {
+    async ({ token, orderId }, { rejectWithValue }) => {
         try {
-            const response = await instance.delete(`/orders/${orderId}`);
+            const response = await instance.delete(`/orders/${orderId}`, {
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                }
+            });
             return response.data.data;
         } catch (error) {
             return rejectWithValue(error.response?.data || 'Failed to delete order');

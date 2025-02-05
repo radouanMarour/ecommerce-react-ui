@@ -22,6 +22,7 @@ const ProductPage = () => {
     const [itemsInstock, setItemsInStock] = useState(0);
     const [optionExists, setOptionExists] = useState(true);
     const [price, setPrice] = useState(product?.price || 0);
+    const [selectedImageIndex, setSelectedImageIndex] = useState(0);
 
     useEffect(() => {
         dispatch(fetchProductById(id));
@@ -105,7 +106,7 @@ const ProductPage = () => {
                 <div className="lg:w-1/2 space-y-4">
                     <div className="relative bg-gray-50 rounded-lg overflow-hidden">
                         <img
-                            src={product?.images?.[0] || "/placeholder.png"}
+                            src={product?.images?.[selectedImageIndex] || "/placeholder.png"}
                             alt={product.name}
                             className="w-full h-[500px] object-contain p-4 transition-transform hover:scale-105"
                         />
@@ -113,11 +114,19 @@ const ProductPage = () => {
 
                     <div className="grid grid-cols-4 gap-4">
                         {product?.images?.map((image, index) => (
-                            <div key={index} className="bg-gray-50 rounded-lg p-2 hover:shadow-md transition-shadow">
+                            <div
+                                key={index}
+                                onClick={() => setSelectedImageIndex(index)}
+                                className={`bg-gray-50 rounded-lg p-2 transition-all cursor-pointer
+                                    ${selectedImageIndex === index
+                                        ? 'ring-2 ring-blue-600 shadow-md'
+                                        : 'hover:shadow-md'
+                                    }`}
+                            >
                                 <img
-                                    src={image || "/placeholder.png"}
+                                    src={image}
                                     alt={`${product.name} view ${index + 1}`}
-                                    className="w-full h-24 object-contain rounded-md cursor-pointer"
+                                    className="w-full h-24 object-contain rounded-md"
                                 />
                             </div>
                         ))}

@@ -12,6 +12,7 @@ import Loader from '../../components/Loader';
 
 const AdminCategories = () => {
     const { categories, loading } = useSelector((state) => state.category);
+    const { token } = useSelector((state) => state.auth);
     const dispatch = useDispatch();
 
     useEffect(() => {
@@ -21,7 +22,7 @@ const AdminCategories = () => {
     const handleDelete = async (categoryId) => {
         const confirmed = window.confirm('Are you sure you want to delete this category?');
         if (confirmed) {
-            dispatch(deleteCategory(categoryId));
+            dispatch(deleteCategory({ token, categoryId }));
         }
     };
 
@@ -59,7 +60,7 @@ const AdminCategories = () => {
                                         {category.name}
                                     </td>
                                     <td className="border px-4 py-2">
-                                        <Link to={`/dashboard/categories/edit/${category._id}`}
+                                        <Link to={`/admin/dashboard/categories/edit/${category._id}`}
                                             className="text-blue-500 hover:text-blue-700 mr-2"
                                         >
                                             <EditIcon />

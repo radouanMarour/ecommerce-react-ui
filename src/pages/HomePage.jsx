@@ -23,7 +23,6 @@ const HomePage = () => {
         .slice(0, 3)
         .map(product => ({
             ...product,
-            bgColor: "bg-primary bg-opacity-10" // You can randomize these if needed
         }))
     const featuredProducts = products
         .slice(0, 6)
@@ -48,7 +47,7 @@ const HomePage = () => {
             >
                 {bestSellers.map((product) => (
                     <SwiperSlide key={product._id}>
-                        <div className={`${product.bgColor} p-8 rounded-lg min-h-[400px] flex items-center`}>
+                        <Link to={`/products/${product._id}`} className={`p-8 rounded-lg min-h-[400px] flex items-center`}>
                             <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-center w-full">
                                 <div className="max-w-2xl">
                                     <h1 className="text-4xl font-bold mb-4">{product.name}</h1>
@@ -61,11 +60,11 @@ const HomePage = () => {
                                         View Product
                                     </Link>
                                 </div>
-                                <div className="bg-gray-200 rounded-lg w-full order-1">
-                                    <img src={product.images?.[0]} alt="" className='w-full' />
+                                <div className="rounded-lg w-full order-1">
+                                    <img src={product.images?.[0]} alt="" className='w-full h-72 object-contain' />
                                 </div>
                             </div>
-                        </div>
+                        </Link>
                     </SwiperSlide>
                 ))}
             </Swiper>
@@ -87,23 +86,28 @@ const HomePage = () => {
                             slidesPerView: 4,
                         },
                     }}
+                    navigation={true}
                     loop={true}
                     speed={800}
                     className="pb-8 relative group"
                 >
                     {featuredProducts.map((product) => (
                         <SwiperSlide key={product._id}>
-                            <div className="border rounded-lg p-4 hover:shadow-lg transition">
+                            <Link to={`/products/${product._id}`} className="border rounded-lg p-4 hover:shadow-lg transition block">
                                 <div className="bg-gray-200 w-full rounded-md mb-4">
-                                    <img src={product.images?.[0]} alt='' />
+                                    <img
+                                        src={product.images?.[0]}
+                                        alt=''
+                                        className="bg-gray-200 w-full h-60 object-contain"
+                                    />
                                 </div>
                                 <h3 className="font-semibold">{product.name}</h3>
                                 <p className="text-gray-600">${product.price}</p>
-                            </div>
+                            </Link>
                         </SwiperSlide>
                     ))}
-                    <div className="swiper-button-prev !text-gray-800 !left-0 opacity-0 group-hover:opacity-100 transition-opacity"></div>
-                    <div className="swiper-button-next !text-gray-800 !right-0 opacity-0 group-hover:opacity-100 transition-opacity"></div>
+                    {/* <div className="swiper-button-prev !text-gray-800 !left-0 opacity-0 group-hover:opacity-100 transition-opacity"></div>
+                    <div className="swiper-button-next !text-gray-800 !right-0 opacity-0 group-hover:opacity-100 transition-opacity"></div> */}
                 </Swiper>
             </section>
 
@@ -114,11 +118,18 @@ const HomePage = () => {
                     {categories.map((category) => (
                         !category.parent &&
                         <Link
-                            to={`/products?category=${category._id}&categoryName=${encodeURIComponent(category.name)}`}
+                            to={`/products?category=${category.name.toLowerCase()}`}
                             key={category._id}
                             className="bg-gray-100 p-6 rounded-lg text-center hover:bg-gray-200 cursor-pointer"
                         >
-                            <h3 className="font-medium">{category.name}</h3>
+                            <div className="flex flex-col items-center">
+                                <img
+                                    src={category.image}
+                                    alt={category.name}
+                                    className="w-24 h-24 object-contain mb-4"
+                                />
+                                <h3 className="font-medium">{category.name}</h3>
+                            </div>
                         </Link>
                     ))}
                 </div>

@@ -57,7 +57,12 @@ const MobileHeader = () => {
                                         className="flex justify-between items-center cursor-pointer p-3 transition-colors"
                                         onClick={() => toggleCategory(index)}
                                     >
-                                        <span className="font-medium text-slate-800">{cat.name}</span>
+                                        <Link
+                                            to={`/products?category=${cat.name.toLowerCase()}`}
+                                            className="font-medium text-slate-800"
+                                        >
+                                            {cat.name}
+                                        </Link>
                                         {activeCategory === index ? (
                                             <ExpandLessOutlinedIcon className="text-slate-600" />
                                         ) : (
@@ -69,7 +74,7 @@ const MobileHeader = () => {
                                             {cat.subcategories.map((subcat, subIndex) => (
                                                 <li key={subIndex}>
                                                     <Link
-                                                        to="/"
+                                                        to={`/products?category=${cat.name.toLowerCase()}&subcategory=${subcat.name.toLowerCase()}`}
                                                         className="block px-6 py-2 hover:bg-gray-100 transition-colors text-slate-700"
                                                     >
                                                         {subcat.name}

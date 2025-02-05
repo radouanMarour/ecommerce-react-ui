@@ -4,13 +4,31 @@ import { fetchProducts } from '../api/productApi';
 import { fetchCategories } from '../api/categoryApi';
 import ProductCard from '../components/ProductCard';
 import Loader from '../components/Loader';
-import { useSearchParams } from 'react-router-dom';
+import { useParams, useSearchParams, useNavigate } from 'react-router-dom';
+import {
+    standardSizes,
+    numericSizes,
+    customFormats,
+    europeanSizes,
+    frenchSizes,
+    colors
+} from '../data';
+
+const sizes = [
+    ...standardSizes,
+    ...numericSizes,
+    ...customFormats,
+    ...europeanSizes,
+    ...frenchSizes,
+]
 
 const ProductList = () => {
     const { products, loading, error } = useSelector((state) => state.product);
     const { categories } = useSelector((state) => state.category);
-    const [selectedCategory, setSelectedCategory] = useState('');
-    const [subcategories, setSubcategories] = useState([]);
+    const [sortOption, setSortOption] = useState('');
+    const [searchParams] = useSearchParams();
+    const navigate = useNavigate();
+    const [isSidebarOpen, setSidebarOpen] = useState(false);
     const dispatch = useDispatch();
     const [filters, setFilters] = useState({
         category: '',
@@ -20,35 +38,48 @@ const ProductList = () => {
         priceMin: 0,
         priceMax: 1000,
     });
-    const [sortOption, setSortOption] = useState('');
-    const [searchParams] = useSearchParams();
+
     const searchQuery = searchParams.get('search');
-    const [isSidebarOpen, setSidebarOpen] = useState(false);
+    const categoryName = searchParams.get('category');
+    const subcategoryName = searchParams.get('subcategory');
+
+    useEffect(() => {
+        if (categoryName) {
+            setFilters((prevFilters) => ({
+                ...prevFilters,
+                category: categoryName,
+            }));
+        }
+        if (subcategoryName) {
+            setFilters((prevFilters) => ({
+                ...prevFilters,
+                subcategory: subcategoryName,
+            }));
+        }
+    }, [searchParams]);
 
     useEffect(() => {
         const params = new URLSearchParams({
             ...filters,
+            category: categoryName,
+            ...(subcategoryName && { subcategory: subcategoryName }),
             ...(sortOption && { sort: sortOption }),
+            ...(searchQuery && { search: searchQuery }),
         });
+
         dispatch(fetchProducts(params));
-    }, [filters, sortOption]);
+    }, [filters, sortOption, categoryName, subcategoryName, searchQuery]);
 
     useEffect(() => {
         dispatch(fetchCategories());
     }, [dispatch]);
 
-    useEffect(() => {
-        setSubcategories(categories.find((cat) => cat._id === selectedCategory)?.subcategories || []);
-    }, [selectedCategory]);
-
     const handleFilterChange = (e) => {
         const { name, value } = e.target;
-        if (name === "category") {
-            setSelectedCategory(value);
-        }
+
         setFilters((prevFilters) => ({
             ...prevFilters,
-            [name]: value,
+            [name]: prevFilters[name] === value ? '' : value,
         }));
     };
 
@@ -62,26 +93,12 @@ const ProductList = () => {
             priceMax: 1000,
         });
         setSortOption('');
-        setSelectedCategory('');
+        navigate('/products')
     };
 
-    const activeFiltersCount = Object.values(filters).filter(value => value !== '' && value !== 0).length;
-
-    const categoryId = searchParams.get('category');
-    const categoryName = searchParams.get('categoryName');
-
-    const filteredProducts = products.filter(product => {
-        // Start with category filter
-        const matchesCategory = categoryId ? product.category === categoryId : true;
-
-        // Add search filter
-        const matchesSearch = searchQuery
-            ? product.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-            product.description.toLowerCase().includes(searchQuery.toLowerCase())
-            : true;
-
-        return matchesCategory && matchesSearch;
-    });
+    const activeFiltersCount = Object.values(filters).filter(
+        (value) => value !== '' && value !== 0
+    ).length;
 
     return (
         <div className="container mx-auto px-4 py-2">
@@ -129,53 +146,58 @@ const ProductList = () => {
 
                         <div className="space-y-6">
                             <div className="filter-group">
-                                <label htmlFor="category" className="block text-gray-700 font-medium mb-2">
-                                    Category
-                                </label>
-                                <select
-                                    id="category"
-                                    name="category"
-                                    value={filters.category}
-                                    onChange={handleFilterChange}
-                                    className="w-full px-4 py-2 border border-gray-200 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                                >
-                                    <option value="">All Categories</option>
-                                    {categories.length > 0 && categories.map((category) => (
-                                        category.parent === null && (
-                                            <option key={category._id} value={category._id}>{category.name}</option>
-                                        )
-                                    ))}
-                                </select>
-                            </div>
-
-                            <div className="filter-group">
-                                <label htmlFor="subcategory" className="block text-gray-700 font-medium mb-2">
-                                    Subcategory
-                                </label>
-                                <select
-                                    id="subcategory"
-                                    name="subcategory"
-                                    value={filters.subcategory}
-                                    onChange={handleFilterChange}
-                                    className="w-full px-4 py-2 border border-gray-200 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                                >
-                                    <option value="">All Subcategories</option>
-                                    {subcategories.length > 0 && subcategories.map((subcat) => (
-                                        <option key={subcat._id} value={subcat._id}>{subcat.name}</option>
-                                    ))}
-                                </select>
+                                <h3 className="block text-gray-700 font-medium mb-4">Categories</h3>
+                                <ul className="space-y-2">
+                                    {categories.map((category) => {
+                                        if (!category.parent) {
+                                            return (
+                                                <li key={category._id}>
+                                                    <button
+                                                        onClick={() => navigate(`/products?category=${category.name.toLowerCase()}`)}
+                                                        className={`w-full text-left px-3 py-2 rounded-md text-sm transition-colors
+                                                            ${filters.category === category._id
+                                                                ? 'bg-blue-500 text-white'
+                                                                : 'text-gray-700 hover:bg-gray-100'
+                                                            }`}
+                                                    >
+                                                        {category.name}
+                                                    </button>
+                                                    {filters.category === category.name.toLowerCase() && category.subcategories && (
+                                                        <ul className="ml-4 mt-2 space-y-2">
+                                                            {category.subcategories.map((subcat) => (
+                                                                <li key={subcat._id}>
+                                                                    <button
+                                                                        onClick={() => navigate(`/products?category=${category.name.toLowerCase()}&subcategory=${subcat.name.toLowerCase()}`)}
+                                                                        className={`w-full text-left px-3 py-2 rounded-md text-sm transition-colors
+                                                                            ${filters.subcategory === subcat._id
+                                                                                ? 'bg-blue-500 text-white'
+                                                                                : 'text-gray-600 hover:bg-gray-100'
+                                                                            }`}
+                                                                    >
+                                                                        {subcat.name}
+                                                                    </button>
+                                                                </li>
+                                                            ))}
+                                                        </ul>
+                                                    )}
+                                                </li>
+                                            );
+                                        }
+                                        return null;
+                                    })}
+                                </ul>
                             </div>
 
                             <div className="filter-group">
                                 <label htmlFor="size" className="block text-gray-700 font-medium mb-2">
                                     Size
                                 </label>
-                                <div className="grid grid-cols-3 gap-2">
-                                    {['S', 'M', 'L', 'XL', 'XXL'].map((size) => (
+                                <div className="grid grid-cols-3 gap-2 max-h-64 overflow-y-scroll">
+                                    {sizes.map((size) => (
                                         <button
                                             key={size}
                                             onClick={() => handleFilterChange({ target: { name: 'size', value: size === filters.size ? '' : size } })}
-                                            className={`px-4 py-2 rounded-md text-sm font-medium transition-colors
+                                            className={`px-4 py-2 rounded-md text-xs font-medium transition-colors
                                                 ${filters.size === size
                                                     ? 'bg-blue-500 text-white'
                                                     : 'bg-gray-100 text-gray-700 hover:bg-gray-200'}`}
@@ -190,12 +212,12 @@ const ProductList = () => {
                                 <label htmlFor="color" className="block text-gray-700 font-medium mb-2">
                                     Color
                                 </label>
-                                <div className="flex flex-wrap gap-2">
-                                    {['Black', 'White', 'Red', 'Blue', 'Green'].map((color) => (
+                                <div className="flex flex-wrap gap-2 max-h-64 overflow-y-scroll">
+                                    {colors.map((color) => (
                                         <button
                                             key={color}
                                             onClick={() => handleFilterChange({ target: { name: 'color', value: color === filters.color ? '' : color } })}
-                                            className={`px-4 py-2 rounded-md text-sm font-medium transition-colors
+                                            className={`px-4 py-2 rounded-md text-xs font-medium transition-colors
                                                 ${filters.color === color
                                                     ? 'bg-blue-500 text-white'
                                                     : 'bg-gray-100 text-gray-700 hover:bg-gray-200'}`}
@@ -252,17 +274,19 @@ const ProductList = () => {
                     <div className="bg-white shadow-lg rounded-lg p-6">
                         <div className="flex justify-between items-center mb-6">
                             <div>
-                                <h2 className="text-2xl font-semibold text-gray-800">
+                                <h2 className="text-sm font-semibold text-gray-800 capitalize">
                                     {searchQuery
                                         ? `Search Results for "${searchQuery}"`
                                         : categoryName
-                                            ? `${decodeURIComponent(categoryName)}`
+                                            ? subcategoryName
+                                                ? `${decodeURIComponent(categoryName)} / ${decodeURIComponent(subcategoryName)}`
+                                                : decodeURIComponent(categoryName)
                                             : 'All Products'
                                     }
                                 </h2>
                                 {searchQuery && (
                                     <p className="text-sm text-gray-600 mt-1">
-                                        Found {filteredProducts.length} products
+                                        Found {products.length} products
                                     </p>
                                 )}
                             </div>
@@ -279,22 +303,16 @@ const ProductList = () => {
                             </select>
                         </div>
 
-                        {error && (
-                            <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded mb-4">
-                                Error: {error}
-                            </div>
-                        )}
-
                         {loading ? (
                             <Loader />
                         ) : (
                             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-                                {!filteredProducts.length && (
+                                {!products.length && (
                                     <div className="col-span-full text-center text-gray-500 py-8">
                                         No products found
                                     </div>
                                 )}
-                                {filteredProducts.map((product) => (
+                                {products.map((product) => (
                                     <ProductCard key={product._id} product={product} />
                                 ))}
                             </div>

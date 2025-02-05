@@ -63,9 +63,9 @@ const categorySlice = createSlice({
             })
             .addCase(categoryApi.updateCategory.fulfilled, (state, action) => {
                 state.loading = false;
-                const updatedCategory = action.payload.category
+                const updatedCategory = action.payload
                 state.categories = state.categories.map(
-                    category => category._id === updatedCategory.id ? updatedCategory : category
+                    category => category._id === updatedCategory._id ? updatedCategory : category
                 )
                 state.message = action.payload.message;
             })

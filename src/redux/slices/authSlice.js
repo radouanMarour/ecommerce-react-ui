@@ -15,6 +15,7 @@ const getInitialState = () => {
         loading: false,
         error: null,
         message: null,
+        users: []
     };
 };
 
@@ -79,6 +80,32 @@ const authSlice = createSlice({
                 });
             })
             .addCase(authApi.updateUserProfile.rejected, (state, action) => {
+                state.loading = false;
+                state.error = action.payload.error;
+            })
+            .addCase(authApi.fetchUsers.pending, (state) => {
+                state.loading = true;
+                state.error = null;
+            })
+            .addCase(authApi.fetchUsers.fulfilled, (state, action) => {
+                state.loading = false;
+                state.users = action.payload;
+            })
+            .addCase(authApi.fetchUsers.rejected, (state, action) => {
+                state.loading = false;
+                state.error = action.payload.error;
+            })
+            .addCase(authApi.deleteUser.pending, (state) => {
+                state.loading = true;
+                state.error = null;
+            })
+            .addCase(authApi.deleteUser.fulfilled, (state, action) => {
+                state.loading = false;
+                state.users = state.users.filter((user) => user._id !== action.payload.userId);
+
+                state.message = action.payload.message;
+            })
+            .addCase(authApi.deleteUser.rejected, (state, action) => {
                 state.loading = false;
                 state.error = action.payload.error;
             })

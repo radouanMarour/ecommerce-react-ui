@@ -1,19 +1,12 @@
 import React, { useState } from 'react';
+import {
+    standardSizes,
+    numericSizes,
+    customFormats,
+    europeanSizes,
+    frenchSizes
+} from '../../data';
 
-// Standard Sizes
-const standardSizes = ["XS", "S", "M", "L", "XL", "XXL", "XXXL", "XXXXL"];
-
-// Numeric Sizes
-const numericSizes = ["30", "31", "32", "33", "33/34", "34", "36", "38", "38/34", "40", "40", "40/34", "41", "42", "42/34", "44", "44/34", "46", "48", "50"];
-
-// Custom Formats
-const customFormats = ["L/XL", "33/34", "33W x 32L", "38W x 34L", "40W x 34L", "42W x 34L", "44W x 34L"];
-
-// European Sizes
-const europeanSizes = ["EU 32", "EU 36", "EU 38", "EU 38 1/2", "EU L", "EU M", "EU S", "EU XS"];
-
-// French Sizes
-const frenchSizes = ["FR 42"];
 
 
 const AddVariant = ({ setformData, setShowAddVariant }) => {

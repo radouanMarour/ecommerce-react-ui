@@ -51,12 +51,13 @@ const EditCategory = () => {
         data.append('image', e.target.files[0]);
         const response = await instance.post('/upload/single', data, {
             headers: {
-                'Content-Type': 'multipart/form-data'
+                'Content-Type': 'multipart/form-data',
+                Authorization: `Bearer ${token}`
             }
         });
         setFormData({
             ...formData,
-            image: response.data.fileUrl
+            image: response.data.data
         });
     };
 
@@ -80,11 +81,11 @@ const EditCategory = () => {
         }
         const response = await dispatch(updateCategory({ categoryId: id, formData, token })).unwrap();
         if (response.category)
-            navigate('/dashboard/categories');
+            navigate('/admin/dashboard/categories');
     };
 
     const handleCancel = () => {
-        navigate('/dashboard/categories');
+        navigate('/admin/dashboard/categories');
     };
 
     if (loading) {

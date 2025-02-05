@@ -53,9 +53,9 @@ const PlaceOrderPage = () => {
             taxPrice: calculations.tax,
             totalPrice: calculations.orderTotal
         };
-        const { order } = await dispatch(placeOrder({ token, orderData })).unwrap()
+        const order = await dispatch(placeOrder({ token, orderData })).unwrap()
         if (order) {
-            navigate(`/orders/${order._id}`)
+            navigate(`/admin/dashboard/orders/${order._id}`)
         }
     };
 

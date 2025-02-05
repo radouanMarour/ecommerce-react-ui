@@ -59,7 +59,7 @@ export const updateCategory = createAsyncThunk(
 
 export const deleteCategory = createAsyncThunk(
     'category/deleteCategory',
-    async ({ categoryId, token }, { rejectWithValue }) => {
+    async ({ token, categoryId }, { rejectWithValue }) => {
         try {
             const response = await instance.delete(`/categories/${categoryId}`, {
                 headers: {

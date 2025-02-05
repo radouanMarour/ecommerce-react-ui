@@ -55,7 +55,7 @@ const PayPalCheckoutButtons = ({ amount, orderId }) => {
                 const paymentResult = response.data.data.paymentResult
                 dispatch(payOrder({ token, orderId, paymentResult }))
                 dispatch(clearCart(token))
-                navigate(`/orders/${orderId}`)
+                navigate(`/admin/dashboard/orders/${orderId}`)
                 notifySuccess('Payment successful!');
             }
         } catch (err) {

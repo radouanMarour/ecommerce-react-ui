@@ -13,6 +13,7 @@ import Loader from '../../components/Loader';
 
 
 const AdminProducts = () => {
+    const { token } = useSelector((state) => state.auth);
     const { products, loading } = useSelector((state) => state.product);
     const dispatch = useDispatch();
 
@@ -23,12 +24,12 @@ const AdminProducts = () => {
     const handleDelete = async (productId) => {
         const confirmed = window.confirm('Are you sure you want to delete this product?');
         if (confirmed) {
-            dispatch(deleteProduct(productId));
+            dispatch(deleteProduct({ token, productId }));
         }
     };
 
     const handleToggleFeatured = (productId, isFeatured) => {
-        dispatch(updateProduct({ productId, formData: { isFeatured: !isFeatured } }));
+        dispatch(updateProduct({ token, productId, formData: { isFeatured: !isFeatured } }));
     }
 
     if (loading) {

@@ -79,20 +79,22 @@ const EditProduct = () => {
         setFilePreviews(previews);
         const response = await instance.post('/upload/multiple', data, {
             headers: {
-                'Content-Type': 'multipart/form-data'
+                'Content-Type': 'multipart/form-data',
+                Authorization: `Bearer ${token}`
             },
             onUploadProgress: (progressEvent) => {
                 setUploadProgress(Math.round((progressEvent.loaded / progressEvent.total) * 100));
             }
         });
-        if (response.data.fileUrls && response.data.fileUrls.length > 0) {
+        console.log(response.data)
+        if (response.data.data && response.data.data.length > 0) {
             notifySuccess("Images uploaded successfully")
         } else {
             notifyError("Failed to upload the images, try again")
         }
         setFormData({
             ...formData,
-            images: response.data.fileUrls
+            images: response.data.data
         });
     };
 

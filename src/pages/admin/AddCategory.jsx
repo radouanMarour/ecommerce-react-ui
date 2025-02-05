@@ -31,12 +31,13 @@ const AddCategory = () => {
         data.append('image', e.target.files[0]);
         const response = await instance.post('/upload/single', data, {
             headers: {
-                'Content-Type': 'multipart/form-data'
+                'Content-Type': 'multipart/form-data',
+                Authorization: `Bearer ${token}`
             }
         });
         setFormData({
             ...formData,
-            image: response.data.fileUrl
+            image: response.data.data
         });
     };
 

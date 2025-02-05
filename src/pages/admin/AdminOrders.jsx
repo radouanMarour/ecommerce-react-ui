@@ -18,7 +18,7 @@ const AdminOrders = () => {
     const handleDelete = async (orderId) => {
         const confirmed = window.confirm('Are you sure you want to delete this order?');
         if (confirmed) {
-            dispatch(deleteOrder(orderId));
+            dispatch(deleteOrder({ token, orderId }));
         }
     };
 
@@ -49,7 +49,7 @@ const AdminOrders = () => {
                             {orders?.map(order => (
                                 <tr key={order._id} className="hover:bg-gray-50">
                                     <td className="border px-4 py-2">{order._id}</td>
-                                    <td className="border px-4 py-2">{order.createdAt}</td>
+                                    <td className="border px-4 py-2">{new Date(order.createdAt).toLocaleDateString()}</td>
                                     <td className="border px-4 py-2">{order.user.username}</td>
                                     <td className="border px-4 py-2">${order.totalPrice}</td>
                                     <td className="border px-4 py-2">

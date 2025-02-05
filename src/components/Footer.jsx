@@ -10,7 +10,7 @@ import PhoneIcon from '@mui/icons-material/Phone'
 
 const Footer = () => {
     return (
-        <footer className="bg-gray-900 text-gray-300">
+        <footer className="bg-gray-900 text-gray-300 w-full bottom-0">
             <div className="container mx-auto px-4 py-8">
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
                     {/* Company Info */}

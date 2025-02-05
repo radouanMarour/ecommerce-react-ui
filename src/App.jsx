@@ -26,7 +26,7 @@ const App = () => {
     <Router>
       <Header />
       <div className="min-h-screen flex flex-col">
-        <main className="h-full flex-grow">
+        <main className="flex-grow">
           <Breadcrumb />
           <Routes>
             {/* Public Routes */}

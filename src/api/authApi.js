@@ -44,3 +44,35 @@ export const updateUserProfile = createAsyncThunk(
         }
     }
 );
+
+export const fetchUsers = createAsyncThunk(
+    'auth/fetchUsers',
+    async (token, { rejectWithValue }) => {
+        try {
+            const response = await instance.get('/auth/users', {
+                headers: {
+                    Authorization: `Bearer ${token}`
+                }
+            });
+            return response.data.data;
+        } catch (error) {
+            return rejectWithValue(error.response?.data || 'Failed to fetch users');
+        }
+    }
+);
+
+export const deleteUser = createAsyncThunk(
+    'auth/deleteUser',
+    async ({ token, userId }, { rejectWithValue }) => {
+        try {
+            const response = await instance.delete(`/auth/users/${userId}`, {
+                headers: {
+                    Authorization: `Bearer ${token}`
+                }
+            });
+            return response.data.data;
+        } catch (error) {
+            return rejectWithValue(error.response?.data || 'Failed to delete user');
+        }
+    }
+);

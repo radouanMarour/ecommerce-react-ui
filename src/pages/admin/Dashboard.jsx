@@ -10,6 +10,7 @@ import AddProduct from './AddProduct';
 import EditProduct from './EditProduct';
 import AdminOrders from './AdminOrders';
 import OrderDetailsPage from '../OrderDetailsPage';
+import AdminUsers from './AdminUsers';
 
 const Dashboard = () => {
     return (
@@ -26,6 +27,7 @@ const Dashboard = () => {
                     <Route path="/products/edit/:id" element={<EditProduct />} />
                     <Route path="/orders" element={<AdminOrders />} />
                     <Route path="/orders/:id" element={<OrderDetailsPage />} />
+                    <Route path="/users" element={<AdminUsers />} />
                 </Routes>
             </div>
         </div>

@@ -26,7 +26,7 @@ const OrderDetailsPage = () => {
 
 
     return loading ? <Loader /> : !order ? <h1>No order found</h1> :
-        <div className="container mx-auto px-4 py-8">
+        <div className="container mx-auto px-4 py-8 md:pt-20">
             <div className="grid md:grid-cols-2 gap-8">
                 <div className="space-y-6">
                     <div className="bg-white p-6 rounded-lg shadow">
